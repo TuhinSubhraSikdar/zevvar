@@ -1,0 +1,220 @@
+<!doctype html>
+<html
+  {% if request.design_mode %}
+    class="shopify-design-mode"
+  {% endif %}
+  lang="{{ request.locale.iso_code }}"
+>
+  <head>
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
+    {% if settings.transition_to_main_product or settings.page_transition_enabled %}
+      <link
+        rel="expect"
+        href="#MainContent"
+        blocking="render"
+        id="view-transition-render-blocker"
+      >
+    {% endif %}
+
+    {%- render 'meta-tags' -%}
+    {%- render 'stylesheets' -%}
+    {%- render 'fonts' -%}
+    {%- render 'scripts' -%}
+    {%- render 'theme-styles-variables' -%}
+    {%- render 'color-schemes' -%}
+
+    {% if request.design_mode %}
+      {%- render 'theme-editor' -%}
+    {% endif %}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+    <div id="header-group">
+      {% sections 'header-group' %}
+    </div>
+
+    <script>
+      // Inline header height calculation to prevent layout shift
+      // Note: Updates in calculateHeaderGroupHeight() and updateTransparentHeaderOffset()utilities.js should be kept in sync with this function
+      (function setHeaderHeighCustomProperties() {
+        /*
+         * Header calculation functions for maintaining CSS variables
+         * Mimic calculateHeaderGroupHeight() in utilities.js
+         */
+        const header = document.querySelector('header-component');
+        const headerGroup = document.querySelector('#header-group');
+        const hasHeaderSection = headerGroup?.querySelector('.header-section');
+
+        if (!header || !headerGroup) return;
+
+        const headerHeight = header.offsetHeight;
+
+        // Calculate the total height of the header group
+        let headerGroupHeight = 0;
+        const children = headerGroup.children;
+        for (let i = 0; i < children.length; i++) {
+          const element = children[i];
+          if (element === header || !(element instanceof HTMLElement)) continue;
+          headerGroupHeight += element.offsetHeight;
+        }
+
+        // Check for transparent header special case
+        if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+          headerGroupHeight += headerHeight;
+        }
+
+        // Set CSS variables
+        document.body.style.setProperty('--header-height', `${headerHeight}px`);
+        document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+
+        /**
+         * Updates CSS custom properties for transparent header offset calculation
+         * Mimic updateTransparentHeaderOffset() in utilities.js
+         */
+
+        if (!hasHeaderSection || !header?.hasAttribute('transparent')) {
+          document.body.style.setProperty('--transparent-header-offset-boolean', '0');
+          return;
+        }
+
+        const hasImmediateSection = hasHeaderSection.nextElementSibling?.classList.contains('shopify-section');
+
+        const shouldApplyOffset = !hasImmediateSection ? '1' : '0';
+        document.body.style.setProperty('--transparent-header-offset-boolean', shouldApplyOffset);
+      })();
+    </script>
+
+    <main
+      id="MainContent"
+      class="content-for-layout"
+      role="main"
+      data-page-transition-enabled="{{ settings.page_transition_enabled }}"
+      data-product-transition="{{ settings.transition_to_main_product }}"
+      data-template="{{ template }}"
+    >
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% render 'search-modal' %}
+
+    {% if settings.quick_add or settings.mobile_quick_add %}
+      {% render 'quick-add-modal' %}
+    {% endif %}
+
+    <!-- 🐱 Interactive Shopify Cat (CDN Version) -->
+<style>
+#shopify-cat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 110px;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+#shopify-cat img {
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+#shopify-cat:hover img {
+  transform: scale(1.08);
+}
+
+#cat-bubble {
+  position: absolute;
+  bottom: 115px;
+  right: 0;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  display: none;
+  white-space: nowrap;
+}
+</style>
+
+<div id="shopify-cat">
+  <img id="cat-img" src="https://cdn.shopify.com/s/files/1/0638/3632/3911/files/IDLE.png?v=1767587748" />
+  <div id="cat-bubble"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const cat = document.getElementById("cat-img");
+  const bubble = document.getElementById("cat-bubble");
+
+  const CAT_STATES = {
+    idle: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/IDLE.png?v=1767587748",
+    hover: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Hover.png?v=1767587748",
+    add: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Add.png?v=1767587748",
+    buy: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Buy.png?v=1767587748",
+    bored: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Bored.png?v=1767587748"
+  };
+
+  let idleTimer;
+
+  function setCat(state, text = "") {
+    cat.src = CAT_STATES[state];
+    if (text) {
+      bubble.innerText = text;
+      bubble.style.display = "block";
+      setTimeout(() => bubble.style.display = "none", 2000);
+    }
+  }
+
+  function resetIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      setCat("bored", "I’m bored 😿");
+    }, 5000);
+  }
+
+  // Hover
+  cat.addEventListener("mouseenter", () => {
+    setCat("hover", "Hey! 😺");
+  });
+
+  cat.addEventListener("mouseleave", () => {
+    setCat("idle");
+  });
+
+  // Track activity
+  ["mousemove", "scroll", "click"].forEach(evt => {
+    document.addEventListener(evt, resetIdle);
+  });
+
+  // Add to Cart & Buy Now
+  document.body.addEventListener("click", function (e) {
+
+    if (e.target.closest('button[name="add"], .add-to-cart')) {
+      setCat("add", "Added to cart 🎉");
+    }
+
+    if (e.target.closest('.shopify-payment-button__button, [data-buy-now]')) {
+      setCat("buy", "Great choice 💖");
+    }
+
+  });
+
+  resetIdle();
+});
+</script>
+
+  </body>
+</html>

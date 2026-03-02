@@ -1,0 +1,389 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "blocks_UVjVWX": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_1b725a8_FCKUfK": {
+          "type": "ai_gen_block_1b725a8",
+          "settings": {
+            "show_home_icon": true,
+            "home_text": "Home",
+            "separator": "/",
+            "spacing": 8,
+            "font_size": 14,
+            "underline_on_hover": false,
+            "background_color": "#fff7fa",
+            "text_color": "#2b2b2b",
+            "link_color": "#d81b60",
+            "link_hover_color": "#fce4ec",
+            "separator_color": "#6b1b3a",
+            "current_page_color": "#0f0f0f",
+            "padding_top": 20,
+            "padding_bottom": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_1b725a8_FCKUfK"
+      ],
+      "name": "Breadcrumb navigation",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 26,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "section_r46zd8": {
+      "type": "section",
+      "blocks": {
+        "image_FtWNh4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/slider-1.png",
+            "link": "",
+            "image_ratio": "square",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_egEV3C": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_LEHXyj": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h1>Meet Our Founder</h1>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_YhpHJ9": {
+              "type": "text",
+              "settings": {
+                "text": "<h5><strong>Dipali Vora grew up watching her mother adorn herself with inherited, traditional timepieces—jewels that had witnessed centuries unfold. Folktales shared by her grandmother, filled with sparkle and nostalgia, shaped Dipali’s earliest memories of beauty.<br/><br/>She found herself falling in love with the intricate details, the craftsmanship, and the silent power of jewelry that spoke without words.<br/><br/>For Dipali, this love soon became her calling. What began as admiration slowly evolved into a lifetime passion. Her insatiable hunger to understand the techniques of production and the depth of craftsmanship led her on a journey across Bengal, Rajasthan, Gujarat, and the southern parts of Bharat.<br/><br/>Meeting, observing, interacting, and learning at the grassroots level from local and tribal men and women—many of whom carry inborn talents and skills passed down through centuries—she witnessed the painstaking creation of true masterpieces.<br/><br/>Her designs are a seamless blend of intricate craftsmanship and a modern soul, where every curve, stone, sparkle, and silhouette speaks of luxury that feels personal and eternal.<br/><br/>Thus, Zevvar was born.<br/><br/>At Zevvar, every piece tells a story—woven with heritage, grace, and the timeless beauty of womanhood. From the shimmer of golden hues combined with the subtle charm of stones, each creation is made with love, care, and a promise to make our customers feel truly special.</strong></h5>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_zckfFw": {
+              "type": "button",
+              "settings": {
+                "label": "Know More",
+                "link": "/",
+                "open_in_new_tab": false,
+                "style_class": "button-secondary",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_LEHXyj",
+            "text_YhpHJ9",
+            "button_zckfFw"
+          ]
+        }
+      },
+      "block_order": [
+        "image_FtWNh4",
+        "group_egEV3C"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "collection_links_jXxAzD": {
+      "type": "collection-links",
+      "blocks": {
+        "link": {
+          "type": "_collection-link",
+          "static": true,
+          "settings": {
+            "show_count": true
+          },
+          "blocks": {
+            "title": {
+              "type": "_inline-collection-title",
+              "name": "t:names.title",
+              "static": true,
+              "settings": {
+                "font": "var(--font-subheading--family)",
+                "weight": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none"
+              },
+              "blocks": {}
+            },
+            "image": {
+              "type": "_image",
+              "static": true,
+              "settings": {
+                "height": "large",
+                "ratio": "square",
+                "border_radius": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "name": "t:names.collection_links_spotlight",
+      "settings": {
+        "collection_list": [
+          "bracelet-bangles",
+          "earrings",
+          "hand-harness",
+          "head-gears",
+          "jewellery-sets"
+        ],
+        "layout": "spotlight",
+        "section_width": "page-width",
+        "alignment": "left",
+        "image_position": "right",
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "marquee_TMRMf8": {
+      "type": "marquee",
+      "blocks": {
+        "text_UzndGW": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We make things that work better and last longer.</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_UzndGW"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    }
+  },
+  "order": [
+    "blocks_UVjVWX",
+    "main",
+    "section_r46zd8",
+    "collection_links_jXxAzD",
+    "marquee_TMRMf8"
+  ]
+}
