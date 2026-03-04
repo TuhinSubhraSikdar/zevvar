@@ -231,6 +231,19 @@
                 "price_tVjtKg"
               ]
             },
+            "review_xFUxPB": {
+              "type": "review",
+              "name": "t:names.product_review_stars",
+              "settings": {
+                "stars_style": "shaded",
+                "show_number": true,
+                "rating_color": "primary",
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
             "divider_VJhene": {
               "type": "_divider",
               "name": "t:names.divider",
@@ -321,6 +334,7 @@
           "block_order": [
             "variant_picker_GXrMD7",
             "group_icgrde",
+            "review_xFUxPB",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",

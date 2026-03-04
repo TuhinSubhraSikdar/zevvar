@@ -7,10 +7,11 @@
   text-align: center;
 }
 
+/* HEADING */
 .tss-category-rings__heading {
   font-size: 42px;
   font-weight: 800;
-  color: #1f7a3a;
+  color: #5A0F2E; /* Theme Heading */
   letter-spacing: 2px;
   margin-bottom: 60px;
 }
@@ -26,7 +27,6 @@
   margin: 0 auto;
   padding-bottom: 10px;
 
-  /* Hide scrollbar */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -37,7 +37,7 @@
 
 /* ================= ITEMS ================= */
 .tss-category-rings__item {
-  flex: 0 0 calc((100% - 120px) / 4); /* 4 per row */
+  flex: 0 0 calc((100% - 120px) / 4);
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
@@ -102,9 +102,10 @@
   height: calc(165px * var(--tss-scale));
   border-radius: 50%;
   overflow: hidden;
-  background: #fff;
+  background: #FFFFFF;
   z-index: 3;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  border: 2px solid #F1C6D6; /* Theme Border */
+  box-shadow: 0 12px 25px rgba(90, 15, 46, 0.15);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -114,7 +115,7 @@
   object-fit: cover;
 }
 
-/* ================= HOVER ================= */
+/* ================= HOVER EFFECTS ================= */
 .tss-category-rings__item:hover .tss-ring-outer {
   opacity: 1;
   transform: scale(1) rotate(360deg);
@@ -131,7 +132,11 @@
 
 .tss-category-rings__item:hover .tss-category-image {
   transform: translateY(-8px);
-  box-shadow: 0 28px 45px rgba(0,0,0,0.3);
+  box-shadow: 0 28px 45px rgba(90, 15, 46, 0.3);
+}
+
+.tss-category-rings__item:hover .tss-category-title {
+  color: #AD1457; /* Hover Link */
 }
 
 /* TITLE */
@@ -139,7 +144,8 @@
   margin-top: 22px;
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: #6B1B3A; /* Theme Text */
+  transition: color 0.3s ease;
 }
 
 /* ================= MOBILE (3 PER VIEW SLIDER) ================= */
@@ -160,7 +166,7 @@
   }
 
   .tss-category-rings__item {
-    flex: 0 0 calc((100% - 32px) / 3); /* 3 per view */
+    flex: 0 0 calc((100% - 32px) / 3);
   }
 
   .tss-ring-wrapper {

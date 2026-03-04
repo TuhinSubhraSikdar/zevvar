@@ -330,6 +330,60 @@
         "padding-block-end": 0
       }
     },
+    "tss_shop_by_category_rings_3TMhQE": {
+      "type": "tss-shop-by-category-rings",
+      "blocks": {
+        "category_4JJYw3": {
+          "type": "category",
+          "settings": {
+            "collection": "bracelet-bangles"
+          }
+        },
+        "category_HqpgbK": {
+          "type": "category",
+          "settings": {
+            "collection": "earrings"
+          }
+        },
+        "category_EdiAfX": {
+          "type": "category",
+          "settings": {
+            "collection": "hand-harness"
+          }
+        },
+        "category_aMxMRw": {
+          "type": "category",
+          "settings": {
+            "collection": "head-gears"
+          }
+        },
+        "category_iGmQEW": {
+          "type": "category",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_4JJYw3",
+        "category_HqpgbK",
+        "category_EdiAfX",
+        "category_aMxMRw",
+        "category_iGmQEW"
+      ],
+      "name": "TSS – Category Rings",
+      "settings": {
+        "heading": "SHOP BY CATEGORY",
+        "bg_color": "#fdeee8",
+        "outer_ring_color": "#5a0f2e",
+        "inner_ring_color": "#f1c6d6",
+        "dot_color": "#d81b60",
+        "section_max_width": 1200,
+        "padding_top": 70,
+        "padding_bottom": 70,
+        "circle_scale": 100
+      }
+    },
     "product_list_themegen": {
       "type": "product-list",
       "blocks": {
@@ -1739,7 +1793,7 @@
         "nav_border": "#d81b60",
         "nav_border_hover": "#d81b60",
         "nav_icon": "#d81b60",
-        "nav_hover_icon": "#FFFFFF",
+        "nav_hover_icon": "#ffffff",
         "background_color": "#fff7fa",
         "background_gradient": "",
         "border_color": "#000000",
@@ -2183,6 +2237,7 @@
   },
   "order": [
     "slideshow_cgNCJw",
+    "tss_shop_by_category_rings_3TMhQE",
     "product_list_themegen",
     "collection_list_ARGnWA",
     "section_TLDzjV",
