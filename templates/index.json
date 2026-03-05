@@ -356,20 +356,13 @@
           "settings": {
             "collection": "head-gears"
           }
-        },
-        "category_iGmQEW": {
-          "type": "category",
-          "settings": {
-            "collection": ""
-          }
         }
       },
       "block_order": [
         "category_4JJYw3",
         "category_HqpgbK",
         "category_EdiAfX",
-        "category_aMxMRw",
-        "category_iGmQEW"
+        "category_aMxMRw"
       ],
       "name": "TSS – Category Rings",
       "settings": {

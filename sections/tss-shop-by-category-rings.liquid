@@ -9,36 +9,24 @@
 
 /* HEADING */
 .tss-category-rings__heading {
-  font-size: 42px;
+  font-size: clamp(28px,4vw,42px);
   font-weight: 800;
-  color: #5A0F2E; /* Theme Heading */
+  color: #5A0F2E;
   letter-spacing: 2px;
   margin-bottom: 60px;
 }
 
-/* ================= CAROUSEL CONTAINER ================= */
+/* ================= GRID ================= */
 .tss-category-rings__grid {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
   gap: 40px;
   max-width: var(--tss-max-width);
   margin: 0 auto;
-  padding-bottom: 10px;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.tss-category-rings__grid::-webkit-scrollbar {
-  display: none;
 }
 
 /* ================= ITEMS ================= */
 .tss-category-rings__item {
-  flex: 0 0 calc((100% - 120px) / 4);
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,8 +74,8 @@
 /* DOT */
 .tss-ring-dot {
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 6%;
+  right: 12%;
   width: 12px;
   height: 12px;
   background: var(--tss-dot);
@@ -102,10 +90,10 @@
   height: calc(165px * var(--tss-scale));
   border-radius: 50%;
   overflow: hidden;
-  background: #FFFFFF;
+  background: #ffffff;
   z-index: 3;
-  border: 2px solid #F1C6D6; /* Theme Border */
-  box-shadow: 0 12px 25px rgba(90, 15, 46, 0.15);
+  border: 2px solid var(--tss-ring-inner);
+  box-shadow: 0 12px 25px rgba(90,15,46,0.15);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -132,11 +120,11 @@
 
 .tss-category-rings__item:hover .tss-category-image {
   transform: translateY(-8px);
-  box-shadow: 0 28px 45px rgba(90, 15, 46, 0.3);
+  box-shadow: 0 28px 45px rgba(90,15,46,0.3);
 }
 
 .tss-category-rings__item:hover .tss-category-title {
-  color: #AD1457; /* Hover Link */
+  color: #AD1457;
 }
 
 /* TITLE */
@@ -144,148 +132,158 @@
   margin-top: 22px;
   font-size: 18px;
   font-weight: 600;
-  color: #6B1B3A; /* Theme Text */
+  color: #6B1B3A;
   transition: color 0.3s ease;
 }
 
-/* ================= MOBILE (3 PER VIEW SLIDER) ================= */
-@media (max-width: 768px) {
+/* ================= MOBILE ================= */
+@media (max-width:768px){
 
-  .tss-category-rings {
-    padding-left: 12px;
-    padding-right: 12px;
+  .tss-category-rings{
+    padding-left:12px;
+    padding-right:12px;
   }
 
-  .tss-category-rings__heading {
-    font-size: 24px;
-    margin-bottom: 30px;
+  .tss-category-rings__heading{
+    font-size:24px;
+    margin-bottom:30px;
   }
 
-  .tss-category-rings__grid {
-    gap: 22px;
+  .tss-category-rings__grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
   }
 
-  .tss-category-rings__item {
-    flex: 0 0 calc((100% - 32px) / 3);
-  }
-
-  .tss-ring-wrapper {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
+  .tss-ring-wrapper{
+    width:100%;
+    height:auto;
+    aspect-ratio:1/1;
   }
 
   .tss-ring-outer,
-  .tss-ring-inner {
-    width: 100%;
-    height: 100%;
+  .tss-ring-inner{
+    width:100%;
+    height:100%;
   }
 
-  .tss-ring-outer {
-    border-width: 3px;
+  .tss-ring-outer{
+    border-width:3px;
   }
 
-  .tss-ring-inner {
-    width: 85%;
-    height: 85%;
-    border-width: 2px;
+  .tss-ring-inner{
+    width:85%;
+    height:85%;
+    border-width:2px;
   }
 
-  .tss-category-image {
-    width: 85%;
-    height: 85%;
+  .tss-category-image{
+    width:85%;
+    height:85%;
   }
 
-  .tss-category-title {
-    font-size: 13px;
-    margin-top: 10px;
+  .tss-category-title{
+    font-size:13px;
+    margin-top:10px;
   }
+
 }
 
 {% endstylesheet %}
 
 <section
-  class="tss-category-rings"
-  style="
-    --tss-bg: {{ section.settings.bg_color }};
-    --tss-ring-outer: {{ section.settings.outer_ring_color }};
-    --tss-ring-inner: {{ section.settings.inner_ring_color }};
-    --tss-dot: {{ section.settings.dot_color }};
-    --tss-max-width: {{ section.settings.section_max_width }}px;
-    --tss-padding-top: {{ section.settings.padding_top }}px;
-    --tss-padding-bottom: {{ section.settings.padding_bottom }}px;
-    --tss-scale: {{ section.settings.circle_scale | divided_by: 100.0 }};
-  "
+class="tss-category-rings"
+style="
+--tss-bg: {{ section.settings.bg_color }};
+--tss-ring-outer: {{ section.settings.outer_ring_color }};
+--tss-ring-inner: {{ section.settings.inner_ring_color }};
+--tss-dot: {{ section.settings.dot_color }};
+--tss-max-width: {{ section.settings.section_max_width }}px;
+--tss-padding-top: {{ section.settings.padding_top }}px;
+--tss-padding-bottom: {{ section.settings.padding_bottom }}px;
+--tss-scale: {{ section.settings.circle_scale | divided_by: 100.0 }};
+"
 >
 
-  {% if section.settings.heading != blank %}
-    <h2 class="tss-category-rings__heading">
-      {{ section.settings.heading }}
-    </h2>
-  {% endif %}
+{% if section.settings.heading != blank %}
+<h2 class="tss-category-rings__heading">
+{{ section.settings.heading }}
+</h2>
+{% endif %}
 
-  <div class="tss-category-rings__grid">
-    {% for block in section.blocks %}
-      {% if block.settings.collection %}
-        <div class="tss-category-rings__item" {{ block.shopify_attributes }}>
-          <a href="{{ block.settings.collection.url }}" style="text-decoration:none; color:inherit;">
-            <div class="tss-ring-wrapper">
-              <div class="tss-ring-outer"></div>
-              <div class="tss-ring-inner"></div>
-              <div class="tss-ring-dot"></div>
+<div class="tss-category-rings__grid">
 
-              <div class="tss-category-image">
-                {% if block.settings.collection.image %}
-                  <img src="{{ block.settings.collection.image | img_url: '400x400' }}" loading="lazy">
-                {% elsif block.settings.collection.products.first.featured_image %}
-                  <img src="{{ block.settings.collection.products.first.featured_image | img_url: '400x400' }}" loading="lazy">
-                {% endif %}
-              </div>
-            </div>
+{% for block in section.blocks %}
+{% if block.settings.collection %}
 
-            <div class="tss-category-title">
-              {{ block.settings.collection.title }}
-            </div>
-          </a>
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
+<div class="tss-category-rings__item" {{ block.shopify_attributes }}>
+
+<a href="{{ block.settings.collection.url }}">
+
+<div class="tss-ring-wrapper">
+
+<div class="tss-ring-outer"></div>
+<div class="tss-ring-inner"></div>
+<div class="tss-ring-dot"></div>
+
+<div class="tss-category-image">
+
+{% if block.settings.collection.image %}
+<img src="{{ block.settings.collection.image | img_url: '400x400' }}" alt="{{ block.settings.collection.title }}" loading="lazy">
+
+{% elsif block.settings.collection.products.first.featured_image %}
+<img src="{{ block.settings.collection.products.first.featured_image | img_url: '400x400' }}" alt="{{ block.settings.collection.title }}" loading="lazy">
+{% endif %}
+
+</div>
+</div>
+
+<div class="tss-category-title">
+{{ block.settings.collection.title }}
+</div>
+
+</a>
+
+</div>
+
+{% endif %}
+{% endfor %}
+
+</div>
 </section>
 
 {% schema %}
 {
-  "name": "TSS – Category Rings",
-  "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "SHOP BY CATEGORY" },
-    { "type": "color", "id": "bg_color", "label": "Background Color", "default": "#fdeee8" },
-    { "type": "color", "id": "outer_ring_color", "label": "Outer Ring Color", "default": "#3aa17e" },
-    { "type": "color", "id": "inner_ring_color", "label": "Inner Ring Color", "default": "#8fd3b8" },
-    { "type": "color", "id": "dot_color", "label": "Dot Color", "default": "#3aa17e" },
-    { "type": "range", "id": "section_max_width", "label": "Section Max Width (px)", "min": 900, "max": 1600, "step": 50, "default": 1200 },
-    { "type": "range", "id": "padding_top", "label": "Padding Top (px)", "min": 20, "max": 150, "step": 5, "default": 70 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding Bottom (px)", "min": 20, "max": 150, "step": 5, "default": 70 },
-    { "type": "range", "id": "circle_scale", "label": "Circle Size Scale", "min": 80, "max": 120, "step": 5, "default": 100 }
-  ],
-  "blocks": [
-    {
-      "type": "category",
-      "name": "Category",
-      "settings": [
-        { "type": "collection", "id": "collection", "label": "Select Collection" }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "TSS – Category Rings",
-      "blocks": [
-        { "type": "category" },
-        { "type": "category" },
-        { "type": "category" },
-        { "type": "category" }
-      ]
-    }
-  ]
+"name": "TSS – Category Rings",
+"settings": [
+{ "type": "text", "id": "heading", "label": "Heading", "default": "SHOP BY CATEGORY" },
+{ "type": "color", "id": "bg_color", "label": "Background Color", "default": "#fdeee8" },
+{ "type": "color", "id": "outer_ring_color", "label": "Outer Ring Color", "default": "#3aa17e" },
+{ "type": "color", "id": "inner_ring_color", "label": "Inner Ring Color", "default": "#8fd3b8" },
+{ "type": "color", "id": "dot_color", "label": "Dot Color", "default": "#3aa17e" },
+{ "type": "range", "id": "section_max_width", "label": "Section Max Width (px)", "min": 900, "max": 1600, "step": 50, "default": 1200 },
+{ "type": "range", "id": "padding_top", "label": "Padding Top (px)", "min": 20, "max": 150, "step": 5, "default": 70 },
+{ "type": "range", "id": "padding_bottom", "label": "Padding Bottom (px)", "min": 20, "max": 150, "step": 5, "default": 70 },
+{ "type": "range", "id": "circle_scale", "label": "Circle Size Scale", "min": 80, "max": 120, "step": 5, "default": 100 }
+],
+"blocks": [
+{
+"type": "category",
+"name": "Category",
+"settings": [
+{ "type": "collection", "id": "collection", "label": "Select Collection" }
+]
+}
+],
+"presets": [
+{
+"name": "TSS – Category Rings",
+"blocks": [
+{ "type": "category" },
+{ "type": "category" },
+{ "type": "category" },
+{ "type": "category" }
+]
+}
+]
 }
 {% endschema %}
