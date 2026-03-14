@@ -367,8 +367,8 @@
       "name": "TSS – Category Rings",
       "settings": {
         "heading": "SHOP BY CATEGORY",
-        "bg_color": "#fdeee8",
-        "outer_ring_color": "#5a0f2e",
+        "bg_color": "#fff7f9",
+        "outer_ring_color": "#fff7fa",
         "inner_ring_color": "#f1c6d6",
         "dot_color": "#d81b60",
         "section_max_width": 1200,
