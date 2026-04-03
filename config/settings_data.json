@@ -9,8 +9,8 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/Untitled-3.png",
-    "logo_height": 85,
+    "logo": "shopify://shop_images/WhatsApp_Image_2026-03-05_at_4.31.57_PM-removebg-preview.png",
+    "logo_height": 100,
     "logo_height_mobile": 52,
     "favicon": "shopify://shop_images/Untitled-3.png",
     "type_body_font": "assistant_n4",
@@ -76,10 +76,10 @@
       "scheme-36fb6ada-3d4b-4a9c-b1ee-a74f2ff28670": {
         "settings": {
           "background": "#fff7fa",
-          "foreground_heading": "#5a0f2e",
+          "foreground_heading": "#fff7fa",
           "foreground": "#6b1b3a",
           "primary": "#d81b60",
-          "primary_hover": "#ad1457",
+          "primary_hover": "#fff7fa",
           "border": "#f1c6d6",
           "shadow": "#000000",
           "primary_button_background": "#d81b60",

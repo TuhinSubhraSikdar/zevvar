@@ -114,7 +114,7 @@
       {% render 'quick-add-modal' %}
     {% endif %}
 
-    <!-- 🐱 Interactive Shopify Cat (CDN Version) -->
+    <!-- 🐱 Interactive Shopify Cat v 2.0 -->
 <style>
 #shopify-cat {
   position: fixed;
@@ -149,7 +149,7 @@
 </style>
 
 <div id="shopify-cat">
-  <img id="cat-img" src="https://cdn.shopify.com/s/files/1/0638/3632/3911/files/IDLE.png?v=1767587748" />
+  <img id="cat-img" src="https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Welcome.png?v=1775218907" />
   <div id="cat-bubble"></div>
 </div>
 
@@ -160,59 +160,116 @@ document.addEventListener("DOMContentLoaded", function () {
   const bubble = document.getElementById("cat-bubble");
 
   const CAT_STATES = {
-    idle: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/IDLE.png?v=1767587748",
-    hover: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Hover.png?v=1767587748",
-    add: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Add.png?v=1767587748",
-    buy: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Buy.png?v=1767587748",
-    bored: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Bored.png?v=1767587748"
+    idle: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Idle_89e8fcb1-d1d4-4b24-9f7a-f517b8c6cec5.png?v=1775218906",
+    hover: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Choose_you_jewellery.png?v=1775218908",
+    add: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Great_choice.png?v=1775218908",
+    buy: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Thanks_for_buying.png?v=1775218908",
+    bored: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Bored_97616b0f-5a87-49e8-803b-4801b3259500.png?v=1775218907",
+    happy: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Happy.png?v=1775218908",
+    curious: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Curious.png?v=1775218907"
   };
 
   let idleTimer;
+  let scrollTimer;
+  let bubbleTimer;
+  let stateLock = false;
 
-  function setCat(state, text = "") {
+  function showBubble(text) {
+    clearTimeout(bubbleTimer);
+
+    bubble.innerText = text;
+    bubble.style.display = "block";
+
+    bubbleTimer = setTimeout(() => {
+      bubble.style.display = "none";
+    }, 2000);
+  }
+
+  function setCat(state, text = "", lock = false) {
+    if (stateLock && !lock) return;
+
     cat.src = CAT_STATES[state];
-    if (text) {
-      bubble.innerText = text;
-      bubble.style.display = "block";
-      setTimeout(() => bubble.style.display = "none", 2000);
+
+    if (text) showBubble(text);
+
+    if (lock) {
+      stateLock = true;
+
+      setTimeout(() => {
+        stateLock = false;
+        setCat("idle");
+      }, 2500);
     }
   }
 
-  function resetIdle() {
+  function startIdleTimer() {
     clearTimeout(idleTimer);
+
     idleTimer = setTimeout(() => {
-      setCat("bored", "I’m bored 😿");
+      if (!stateLock) {
+        setCat("bored", "I’m bored 😿");
+      }
+    }, 7000);
+  }
+
+  function startScrollTimer() {
+    clearTimeout(scrollTimer);
+
+    scrollTimer = setTimeout(() => {
+      if (!stateLock) {
+        setCat("curious", "Still exploring? 👀");
+      }
     }, 5000);
   }
 
-  // Hover
-  cat.addEventListener("mouseenter", () => {
-    setCat("hover", "Hey! 😺");
+  function resetActivity() {
+    startIdleTimer();
+  }
+
+  // Product page
+  if (window.location.pathname.includes("/products/")) {
+    setCat("happy", "Beautiful choice 😻", true);
+  }
+
+  // Hover fixed
+  const catWrap = document.getElementById("shopify-cat");
+
+  catWrap.addEventListener("mouseenter", () => {
+    if (!stateLock) {
+      setCat("hover", "Hey! 😺");
+    }
   });
 
-  cat.addEventListener("mouseleave", () => {
-    setCat("idle");
+  catWrap.addEventListener("mouseleave", () => {
+    if (!stateLock) {
+      setCat("idle");
+    }
   });
 
-  // Track activity
-  ["mousemove", "scroll", "click"].forEach(evt => {
-    document.addEventListener(evt, resetIdle);
+  // User activity
+  document.addEventListener("mousemove", resetActivity);
+  document.addEventListener("click", resetActivity);
+
+  document.addEventListener("scroll", () => {
+    startScrollTimer();
+    startIdleTimer();
   });
 
-  // Add to Cart & Buy Now
+  // Add to cart / buy
   document.body.addEventListener("click", function (e) {
 
     if (e.target.closest('button[name="add"], .add-to-cart')) {
-      setCat("add", "Added to cart 🎉");
+      setCat("add", "Added to cart 🎉", true);
     }
 
     if (e.target.closest('.shopify-payment-button__button, [data-buy-now]')) {
-      setCat("buy", "Great choice 💖");
+      setCat("buy", "Great choice 💖", true);
     }
 
   });
 
-  resetIdle();
+  startIdleTimer();
+
 });
 </script>
 

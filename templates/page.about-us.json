@@ -68,6 +68,58 @@
     "main": {
       "type": "main-page",
       "blocks": {
+        "text_cBBD3D": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>In Loving Memory of My Brother</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_bcT36e": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Zevvar is not just a brand for Dipali Vora—it is a piece of her heart, shaped by the love and belief of her brother. He was the one who always pushed her to trust herself. Whenever she felt unsure or scared to start something new, he would gently remind her that she was capable of much more than she thought. When she shared the idea of Zevvar, he didn’t hesitate for a second—he told her to go for it and promised that he would support her completely. Losing him left a space in her life that can never truly be filled. But his words, his encouragement, and his belief in her still stay with her every day. Today, every step she takes with Zevvar is for him. It is her way of keeping his memory alive—quietly, lovingly, and forever close to her heart.</p>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 19,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "heading": {
           "type": "text",
           "name": "Title",
@@ -101,12 +153,14 @@
         }
       },
       "block_order": [
+        "text_cBBD3D",
+        "text_bcT36e",
         "heading",
         "page-content"
       ],
       "settings": {
         "content_direction": "column",
-        "gap": 26,
+        "gap": 4,
         "color_scheme": "",
         "padding-block-start": 40,
         "padding-block-end": 0
@@ -176,7 +230,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_LEHXyj": {
+            "text_GrACmt": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -205,7 +259,7 @@
             "text_YhpHJ9": {
               "type": "text",
               "settings": {
-                "text": "<h5><strong>Dipali Vora grew up watching her mother adorn herself with inherited, traditional timepieces—jewels that had witnessed centuries unfold. Folktales shared by her grandmother, filled with sparkle and nostalgia, shaped Dipali’s earliest memories of beauty.<br/><br/>She found herself falling in love with the intricate details, the craftsmanship, and the silent power of jewelry that spoke without words.<br/><br/>For Dipali, this love soon became her calling. What began as admiration slowly evolved into a lifetime passion. Her insatiable hunger to understand the techniques of production and the depth of craftsmanship led her on a journey across Bengal, Rajasthan, Gujarat, and the southern parts of Bharat.<br/><br/>Meeting, observing, interacting, and learning at the grassroots level from local and tribal men and women—many of whom carry inborn talents and skills passed down through centuries—she witnessed the painstaking creation of true masterpieces.<br/><br/>Her designs are a seamless blend of intricate craftsmanship and a modern soul, where every curve, stone, sparkle, and silhouette speaks of luxury that feels personal and eternal.<br/><br/>Thus, Zevvar was born.<br/><br/>At Zevvar, every piece tells a story—woven with heritage, grace, and the timeless beauty of womanhood. From the shimmer of golden hues combined with the subtle charm of stones, each creation is made with love, care, and a promise to make our customers feel truly special.</strong></h5>",
+                "text": "<h5>Dipali Vora grew up watching her mother adorn herself with inherited, traditional timepieces—jewels that had witnessed centuries unfold. Folktales shared by her grandmother, filled with sparkle and nostalgia, shaped Dipali’s earliest memories of beauty.<br/><br/>She found herself falling in love with the intricate details, the craftsmanship, and the silent power of jewelry that spoke without words.<br/><br/>For Dipali, this love soon became her calling. What began as admiration slowly evolved into a lifetime passion. Her insatiable hunger to understand the techniques of production and the depth of craftsmanship led her on a journey across Bengal, Rajasthan, Gujarat, and the southern parts of Bharat.<br/><br/>Meeting, observing, interacting, and learning at the grassroots level from local and tribal men and women—many of whom carry inborn talents and skills passed down through centuries—she witnessed the painstaking creation of true masterpieces.<br/><br/>Her designs are a seamless blend of intricate craftsmanship and a modern soul, where every curve, stone, sparkle, and silhouette speaks of luxury that feels personal and eternal.<br/><br/>Thus, Zevvar was born.<br/><br/>At Zevvar, every piece tells a story—woven with heritage, grace, and the timeless beauty of womanhood. From the shimmer of golden hues combined with the subtle charm of stones, each creation is made with love, care, and a promise to make our customers feel truly special.</h5>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
@@ -243,7 +297,7 @@
             }
           },
           "block_order": [
-            "text_LEHXyj",
+            "text_GrACmt",
             "text_YhpHJ9",
             "button_zckfFw"
           ]
