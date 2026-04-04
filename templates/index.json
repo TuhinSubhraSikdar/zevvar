@@ -371,10 +371,10 @@
         "outer_ring_color": "#fff7fa",
         "inner_ring_color": "#f1c6d6",
         "dot_color": "#d81b60",
-        "section_max_width": 1200,
-        "padding_top": 70,
-        "padding_bottom": 70,
-        "circle_scale": 100
+        "section_max_width": 1600,
+        "padding_top": 20,
+        "padding_bottom": 35,
+        "square_scale": 120
       }
     },
     "product_list_themegen": {
