@@ -68,64 +68,12 @@
     "main": {
       "type": "main-page",
       "blocks": {
-        "text_cBBD3D": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<h2>In Loving Memory of My Brother</h2>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "text_bcT36e": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>Zevvar is not just a brand for Dipali Vora—it is a piece of her heart, shaped by the love and belief of her brother. He was the one who always pushed her to trust herself. Whenever she felt unsure or scared to start something new, he would gently remind her that she was capable of much more than she thought. When she shared the idea of Zevvar, he didn’t hesitate for a second—he told her to go for it and promised that he would support her completely. Losing him left a space in her life that can never truly be filled. But his words, his encouragement, and his belief in her still stay with her every day. Today, every step she takes with Zevvar is for him. It is her way of keeping his memory alive—quietly, lovingly, and forever close to her heart.</p>",
-            "width": "fit-content",
-            "max_width": "none",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 19,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "heading": {
           "type": "text",
           "name": "Title",
           "settings": {
             "text": "<h1>{{ closest.page.title }}</h1>",
-            "width": "100%",
+            "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
             "type_preset": "h2",
@@ -153,8 +101,6 @@
         }
       },
       "block_order": [
-        "text_cBBD3D",
-        "text_bcT36e",
         "heading",
         "page-content"
       ],
@@ -166,13 +112,48 @@
         "padding-block-end": 0
       }
     },
+    "hero_9iM8wf": {
+      "type": "hero",
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/WhatsApp_Image_2026-03-31_at_17.28.21.jpg",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "auto",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "section_r46zd8": {
       "type": "section",
       "blocks": {
         "image_FtWNh4": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/slider-1.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-31_at_17.27.48.jpg",
             "link": "",
             "image_ratio": "square",
             "width": "fill",
@@ -280,26 +261,11 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_zckfFw": {
-              "type": "button",
-              "settings": {
-                "label": "Know More",
-                "link": "/",
-                "open_in_new_tab": false,
-                "style_class": "button-secondary",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_GrACmt",
-            "text_YhpHJ9",
-            "button_zckfFw"
+            "text_YhpHJ9"
           ]
         }
       },
@@ -310,6 +276,160 @@
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "section_XRBmM7": {
+      "type": "section",
+      "blocks": {
+        "text_kP7QVt": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>In Loving Memory of My Brother</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_X4zja3": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_dAkh9c": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br/><br/></p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "image_BikdEe": {
+              "type": "image",
+              "settings": {
+                "link": "",
+                "image_ratio": "square",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_dAkh9c",
+            "image_BikdEe"
+          ]
+        }
+      },
+      "block_order": [
+        "text_kP7QVt",
+        "group_X4zja3"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "column",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
@@ -385,7 +505,7 @@
         "layout": "spotlight",
         "section_width": "page-width",
         "alignment": "left",
-        "image_position": "right",
+        "image_position": "left",
         "color_scheme": "",
         "padding-block-start": 40,
         "padding-block-end": 40
@@ -436,7 +556,9 @@
   "order": [
     "blocks_UVjVWX",
     "main",
+    "hero_9iM8wf",
     "section_r46zd8",
+    "section_XRBmM7",
     "collection_links_jXxAzD",
     "marquee_TMRMf8"
   ]
