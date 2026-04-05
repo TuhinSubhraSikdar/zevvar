@@ -70,6 +70,16 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "1219337400145039034": {
+        "type": "shopify://apps/kwikpass/blocks/kp_login/603e209b-d585-47ff-8592-837a4faa325b",
+        "disabled": false,
+        "settings": {}
+      },
+      "6279071938380501511": {
+        "type": "shopify://apps/powerful-form-builder/blocks/app-embed/e4bcb1eb-35b2-42e6-bc37-bfe0e1542c9d",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
@@ -80,7 +90,7 @@
           "foreground": "#6b1b3a",
           "primary": "#d81b60",
           "primary_hover": "#fff7fa",
-          "border": "#f1c6d6",
+          "border": "#6b1b3a",
           "shadow": "#000000",
           "primary_button_background": "#d81b60",
           "primary_button_text": "#ffffff",
@@ -100,6 +110,45 @@
           "input_hover_background": "#ffffff",
           "variant_background_color": "#ffffff",
           "variant_text_color": "#ad1457",
+          "variant_border_color": "#f1c6d6",
+          "variant_hover_background_color": "#fce4ec",
+          "variant_hover_text_color": "#ad1457",
+          "variant_hover_border_color": "#d81b60",
+          "selected_variant_background_color": "#d81b60",
+          "selected_variant_text_color": "#ffffff",
+          "selected_variant_border_color": "#d81b60",
+          "selected_variant_hover_background_color": "#ad1457",
+          "selected_variant_hover_text_color": "#ffffff",
+          "selected_variant_hover_border_color": "#ad1457"
+        }
+      },
+      "scheme-c2bf2266-aace-484e-8057-6a79bda0511d": {
+        "settings": {
+          "background": "#d81b60",
+          "foreground_heading": "#fff7fa",
+          "foreground": "#ffffff",
+          "primary": "#ffffff",
+          "primary_hover": "#fff7fa",
+          "border": "#f1c6d6",
+          "shadow": "#000000",
+          "primary_button_background": "#d81b60",
+          "primary_button_text": "#ffffff",
+          "primary_button_border": "#d81b60",
+          "primary_button_hover_background": "#ffffff",
+          "primary_button_hover_text": "#ffffff",
+          "primary_button_hover_border": "#ad1457",
+          "secondary_button_background": "rgba(0,0,0,0)",
+          "secondary_button_text": "#ffffff",
+          "secondary_button_border": "#ad1457",
+          "secondary_button_hover_background": "#fce4ec",
+          "secondary_button_hover_text": "#ad1457",
+          "secondary_button_hover_border": "#ad1457",
+          "input_background": "#ffffff",
+          "input_text_color": "#ffffff",
+          "input_border_color": "#f1c6d6",
+          "input_hover_background": "#ffffff",
+          "variant_background_color": "#ffffff",
+          "variant_text_color": "#ffffff",
           "variant_border_color": "#f1c6d6",
           "variant_hover_background_color": "#fce4ec",
           "variant_hover_text_color": "#ad1457",
