@@ -367,10 +367,10 @@
       "name": "TSS – Category Rings",
       "settings": {
         "heading": "SHOP BY CATEGORY",
-        "bg_color": "#fff7f9",
+        "bg_color": "#f2b5c4",
         "outer_ring_color": "#fff7fa",
-        "inner_ring_color": "#f1c6d6",
-        "dot_color": "#d81b60",
+        "inner_ring_color": "#f7f7f7",
+        "dot_color": "#6b1b3a",
         "section_max_width": 1600,
         "padding_top": 20,
         "padding_bottom": 35,
@@ -825,6 +825,68 @@
         "color_scheme": "",
         "padding-block-start": 0,
         "padding-block-end": 48
+      }
+    },
+    "section_6Ff4pa": {
+      "type": "section",
+      "blocks": {
+        "text_zcbjmj": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h1><strong>Why Choose Zevvar?</strong></h1>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_zcbjmj"
+      ],
+      "name": "t:names.custom_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-end",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "custom",
+        "section_height_custom": 0,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "section_TLDzjV": {
@@ -1322,7 +1384,7 @@
           "type": "_hotspot-product",
           "settings": {
             "collection": "earrings",
-            "x-position": 42,
+            "x-position": 43,
             "y-position": 35
           },
           "blocks": {}
@@ -1818,7 +1880,7 @@
         "icons_shape": "none",
         "section_width": "page-width",
         "gap": 28,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-36fb6ada-3d4b-4a9c-b1ee-a74f2ff28670",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -1947,7 +2009,7 @@
             "customer_name_3": "Priya Sharma",
             "star_rating_3": 5,
             "testimonial_text_3": "The perfect blend of traditional and modern design. These pieces have become my everyday favourites.",
-            "background_color": "#fff7f9",
+            "background_color": "#16eded",
             "heading_color": "#0f0f0f",
             "text_color": "#2b2b2b",
             "name_color": "#0f0f0f",
@@ -1967,14 +2029,14 @@
         "ai_gen_block_f7579b4_UVgpyj"
       ],
       "settings": {
-        "content_direction": "column",
+        "content_direction": "row",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
+        "gap": 0,
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
@@ -1986,8 +2048,8 @@
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
+        "toggle_overlay": true,
+        "overlay_color": "#16eded",
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 0,
@@ -2360,6 +2422,7 @@
     "tss_shop_by_category_rings_3TMhQE",
     "product_list_themegen",
     "collection_list_ARGnWA",
+    "section_6Ff4pa",
     "section_TLDzjV",
     "product_hotspots_pQeAgt",
     "product_list_AEyakR",

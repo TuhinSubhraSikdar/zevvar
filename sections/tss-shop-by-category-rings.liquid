@@ -1,5 +1,4 @@
 {% stylesheet %}
-
 /* ================= SECTION ================= */
 .tss-category-rings {
   background: var(--tss-bg);
@@ -13,7 +12,14 @@
   font-weight: 800;
   color: #5A0F2E;
   letter-spacing: 2px;
-  margin-bottom: 60px;
+  margin-bottom: var(--tss-heading-gap);
+}
+
+/* ================= WRAPPER ================= */
+.tss-category-rings__grid-wrapper {
+  position: relative;
+  max-width: var(--tss-max-width);
+  margin: 0 auto;
 }
 
 /* ================= GRID ================= */
@@ -23,8 +29,6 @@
   overflow-x:auto;
   scroll-behavior:smooth;
   gap:40px;
-  max-width: var(--tss-max-width);
-  margin: 0 auto;
 }
 
 /* ================= ITEMS ================= */
@@ -139,22 +143,42 @@
   transition:color 0.3s ease;
 }
 
-/* ================= NAV ================= */
+/* ================= NAV SIDE ================= */
 .tss-slider-nav {
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-  max-width:var(--tss-max-width);
-  margin:0 auto 20px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
 }
 
 .tss-slider-nav button {
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:18px;
+  pointer-events: all;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transition: 0.3s ease;
+}
+
+.tss-prev {
+  transform: translateX(-70%);
+}
+
+.tss-next {
+  transform: translateX(70%);
+}
+
+.tss-slider-nav button:hover {
+  transform: scale(1.1);
 }
 
 /* ================= MOBILE ================= */
@@ -167,7 +191,6 @@
 
   .tss-category-rings__heading{
     font-size:24px;
-    margin-bottom:30px;
   }
 
   .tss-category-rings__grid{
@@ -190,10 +213,12 @@
     font-size:13px;
     margin-top:10px;
   }
+
+  .tss-slider-nav{
+    display:none;
+  }
 }
-
 {% endstylesheet %}
-
 <section
 class="tss-category-rings"
 style="
@@ -205,6 +230,7 @@ style="
 --tss-padding-top: {{ section.settings.padding_top }}px;
 --tss-padding-bottom: {{ section.settings.padding_bottom }}px;
 --tss-scale: {{ section.settings.square_scale | divided_by: 100.0 }};
+--tss-heading-gap: {{ section.settings.heading_gap }}px;
 "
 >
 
@@ -214,50 +240,50 @@ style="
 </h2>
 {% endif %}
 
-<div class="tss-slider-nav">
-  <button class="tss-prev">←</button>
-  <button class="tss-next">→</button>
+<div class="tss-category-rings__grid-wrapper">
+
+  <div class="tss-slider-nav">
+    <button class="tss-prev">←</button>
+    <button class="tss-next">→</button>
+  </div>
+
+  <div class="tss-category-rings__grid">
+
+  {% for block in section.blocks %}
+  {% if block.settings.collection %}
+
+  <div class="tss-category-rings__item" {{ block.shopify_attributes }}>
+
+  <a href="{{ block.settings.collection.url }}">
+
+  <div class="tss-ring-wrapper">
+    <div class="tss-ring-outer"></div>
+    <div class="tss-ring-inner"></div>
+    <div class="tss-ring-dot"></div>
+
+    <div class="tss-category-image">
+      {% if block.settings.collection.image %}
+      <img src="{{ block.settings.collection.image | img_url: '400x400' }}" alt="{{ block.settings.collection.title }}" loading="lazy">
+      {% elsif block.settings.collection.products.first.featured_image %}
+      <img src="{{ block.settings.collection.products.first.featured_image | img_url: '400x400' }}" alt="{{ block.settings.collection.title }}" loading="lazy">
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="tss-category-title">
+  {{ block.settings.collection.title }}
+  </div>
+
+  </a>
+
+  </div>
+
+  {% endif %}
+  {% endfor %}
+
+  </div>
 </div>
 
-<div class="tss-category-rings__grid">
-
-{% for block in section.blocks %}
-{% if block.settings.collection %}
-
-<div class="tss-category-rings__item" {{ block.shopify_attributes }}>
-
-<a href="{{ block.settings.collection.url }}">
-
-<div class="tss-ring-wrapper">
-
-<div class="tss-ring-outer"></div>
-<div class="tss-ring-inner"></div>
-<div class="tss-ring-dot"></div>
-
-<div class="tss-category-image">
-
-{% if block.settings.collection.image %}
-<img src="{{ block.settings.collection.image | img_url: '400x400' }}" alt="{{ block.settings.collection.title }}" loading="lazy">
-
-{% elsif block.settings.collection.products.first.featured_image %}
-<img src="{{ block.settings.collection.products.first.featured_image | img_url: '400x400' }}" alt="{{ block.settings.collection.title }}" loading="lazy">
-{% endif %}
-
-</div>
-</div>
-
-<div class="tss-category-title">
-{{ block.settings.collection.title }}
-</div>
-
-</a>
-
-</div>
-
-{% endif %}
-{% endfor %}
-
-</div>
 </section>
 
 <script>
@@ -279,7 +305,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
-
 {% schema %}
 {
 "name": "TSS – Category Squares",
@@ -292,7 +317,16 @@ document.addEventListener("DOMContentLoaded", function () {
 { "type": "range", "id": "section_max_width", "label": "Section Max Width (px)", "min": 900, "max": 1600, "step": 50, "default": 1200 },
 { "type": "range", "id": "padding_top", "label": "Padding Top (px)", "min": 20, "max": 150, "step": 5, "default": 70 },
 { "type": "range", "id": "padding_bottom", "label": "Padding Bottom (px)", "min": 20, "max": 150, "step": 5, "default": 70 },
-{ "type": "range", "id": "square_scale", "label": "Square Size Scale", "min": 80, "max": 120, "step": 5, "default": 100 }
+{ "type": "range", "id": "square_scale", "label": "Square Size Scale", "min": 80, "max": 120, "step": 5, "default": 100 },
+{
+"type": "range",
+"id": "heading_gap",
+"label": "Spacing below heading",
+"min": 10,
+"max": 100,
+"step": 5,
+"default": 60
+}
 ],
 "blocks": [
 {
