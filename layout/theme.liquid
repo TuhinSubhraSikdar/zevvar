@@ -125,15 +125,18 @@
   cursor: pointer;
 }
 
-#shopify-cat img {
+/* VIDEO */
+#cat-video {
   width: 100%;
-  transition: transform 0.3s ease;
+  border-radius: 10px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-#shopify-cat:hover img {
+#shopify-cat:hover #cat-video {
   transform: scale(1.08);
 }
 
+/* BUBBLE */
 #cat-bubble {
   position: absolute;
   bottom: 115px;
@@ -149,24 +152,24 @@
 </style>
 
 <div id="shopify-cat">
-  <img id="cat-img" src="https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Welcome.png?v=1775218907" />
+  <video id="cat-video" autoplay muted loop playsinline></video>
   <div id="cat-bubble"></div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  const cat = document.getElementById("cat-img");
+  const cat = document.getElementById("cat-video");
   const bubble = document.getElementById("cat-bubble");
 
   const CAT_STATES = {
-    idle: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Idle_89e8fcb1-d1d4-4b24-9f7a-f517b8c6cec5.png?v=1775218906",
-    hover: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Choose_you_jewellery.png?v=1775218908",
-    add: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Great_choice.png?v=1775218908",
-    buy: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Thanks_for_buying.png?v=1775218908",
-    bored: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Bored_97616b0f-5a87-49e8-803b-4801b3259500.png?v=1775218907",
-    happy: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Happy.png?v=1775218908",
-    curious: "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Curious.png?v=1775218907"
+    idle: "https://cdn.shopify.com/videos/c/o/v/1e56305146354e4098887b55cb3e54c2.mp4",
+    hover: "https://cdn.shopify.com/videos/c/o/v/d046856d2efd4b03962fca98d9294884.mp4",
+    add: "https://cdn.shopify.com/videos/c/o/v/37629a3f32f242248ebeef73eef3c33c.mp4",
+    buy: "https://cdn.shopify.com/videos/c/o/v/31606205a65e41e8bc5e5b4a4c8cf099.mp4",
+    bored: "https://cdn.shopify.com/videos/c/o/v/4b98b39afceb4223bdf5ed180045f714.mp4",
+    happy: "https://cdn.shopify.com/videos/c/o/v/a900cee88ee3428dac449b3ce0cfb3d7.mp4",
+    curious: "https://cdn.shopify.com/videos/c/o/v/3e3e28c736f64ac082e087ea6d16f175.mp4"
   };
 
   let idleTimer;
@@ -188,7 +191,20 @@ document.addEventListener("DOMContentLoaded", function () {
   function setCat(state, text = "", lock = false) {
     if (stateLock && !lock) return;
 
-    cat.src = CAT_STATES[state];
+    const src = CAT_STATES[state];
+
+    // fade out
+    cat.style.opacity = 0;
+
+    setTimeout(() => {
+      cat.pause();
+      cat.src = src;
+      cat.load();
+      cat.play();
+
+      // fade in
+      cat.style.opacity = 1;
+    }, 150);
 
     if (text) showBubble(text);
 
@@ -226,14 +242,14 @@ document.addEventListener("DOMContentLoaded", function () {
     startIdleTimer();
   }
 
-  // Product page
+  // Product page trigger
   if (window.location.pathname.includes("/products/")) {
     setCat("happy", "Beautiful choice 😻", true);
   }
 
-  // Hover fixed
   const catWrap = document.getElementById("shopify-cat");
 
+  // Hover (desktop)
   catWrap.addEventListener("mouseenter", () => {
     if (!stateLock) {
       setCat("hover", "Hey! 😺");
@@ -246,6 +262,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Mobile tap support
+  catWrap.addEventListener("click", () => {
+    if (!stateLock) {
+      setCat("hover", "Hi there 😺");
+    }
+  });
+
   // User activity
   document.addEventListener("mousemove", resetActivity);
   document.addEventListener("click", resetActivity);
@@ -255,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
     startIdleTimer();
   });
 
-  // Add to cart / buy
+  // Add to cart / buy detection
   document.body.addEventListener("click", function (e) {
 
     if (e.target.closest('button[name="add"], .add-to-cart')) {
@@ -268,10 +291,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   });
 
+  // Start idle
+  setCat("idle");
   startIdleTimer();
 
 });
 </script>
-
   </body>
 </html>

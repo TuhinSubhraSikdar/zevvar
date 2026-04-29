@@ -84,7 +84,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Zavver creates timeless jewellery with modern elegance, blending refined design and delicate craftsmanship to celebrate confidence, beauty, and everyday luxury for today’s bold, expressive women.</p>",
+                "text": "<p>Zevvar creates timeless jewellery with modern elegance, blending refined design and delicate craftsmanship to celebrate confidence, beauty, and everyday luxury for today’s bold, expressive women.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "center",
@@ -391,7 +391,7 @@
                 "width": "fill",
                 "custom_width": 100,
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-c2bf2266-aace-484e-8057-6a79bda0511d",
+                "color_scheme": "scheme-36fb6ada-3d4b-4a9c-b1ee-a74f2ff28670",
                 "heading": "",
                 "heading_preset": "paragraph",
                 "border_style": "underline",

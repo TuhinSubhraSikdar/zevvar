@@ -21,13 +21,13 @@
             "spacing": 8,
             "font_size": 14,
             "underline_on_hover": false,
-            "background_color": "#fff7f9",
+            "background_color": "#f5f5dc",
             "text_color": "#2b2b2b",
-            "link_color": "#5a0f2e",
-            "link_hover_color": "#ad1457",
-            "separator_color": "#5a0f2e",
+            "link_color": "#5f6e00",
+            "link_hover_color": "#5f6e00",
+            "separator_color": "#000000",
             "current_page_color": "#0f0f0f",
-            "padding_top": 20,
+            "padding_top": 60,
             "padding_bottom": 20
           },
           "blocks": {}

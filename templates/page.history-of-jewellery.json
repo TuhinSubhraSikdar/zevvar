@@ -146,7 +146,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 25,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -711,7 +711,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 17,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -824,7 +824,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 19,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -937,7 +937,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 17,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -987,6 +987,7 @@
           "settings": {
             "source": "uploaded",
             "video": "shopify://files/videos/WhatsApp Video 2026-04-10 at 16.45.00.mp4",
+            "video_url": "",
             "video_autoplay": true,
             "video_loop": true,
             "alt": "",
@@ -1050,7 +1051,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 19,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -1100,6 +1101,7 @@
           "settings": {
             "source": "uploaded",
             "video": "shopify://files/videos/WhatsApp Video 2026-04-10 at 16.45.05.mp4",
+            "video_url": "",
             "video_autoplay": true,
             "video_loop": true,
             "alt": "",
@@ -1147,7 +1149,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Swarovski jewellery originated in 1895 in the small Alpine town of Wattens, Austria. It was founded by Daniel Swarovski during the late 19th century.<br/>He revolutionized jewellery design by inventing an advanced electric crystal-cutting machine. This innovation brought unmatched brilliance and precision to crystal artistry. By the early 20th century, Swarovski crystals were admired across European royal circles. They gained special recognition during the reign of Franz Joseph I. Historical records suggest members of the imperial court appreciated Swarovski’s finely cut crystals as elegant gifts within aristocratic society. From Austria, the brand expanded globally, becoming a symbol of glamour and refinement. Each crystal is machine-cut with scientific precision for maximum sparkle. Advanced polishing techniques create a radiant, diamond-like shine.<br/>The jewellery blends innovation with contemporary fashion trends. Lightweight yet luxurious, it complements both casual and evening wear. European craftsmanship ensures flawless finishing and symmetry. Designers experiment boldly with colors, shapes, and modern styles. Swarovski gained worldwide fame through Hollywood films and fashion runways. Every crystal reflects clarity, brilliance, and technical mastery. It represents accessible luxury for the modern generation. Add Swarovski sparkle to your collection and shine with timeless elegance.</p>",
+            "text": "<p>Swarovski jewellery originated in 1895 in the small Alpine town of Wattens, Austria. It was founded by Daniel Swarovski during the late 19th century.<br/>He revolutionized jewellery design by inventing an advanced electric crystal-cutting machine. <br/>This innovation brought unmatched brilliance and precision to crystal artistry. By the early 20th century, Swarovski crystals were admired across European royal circles. They gained special recognition during the reign of Franz Joseph I. Historical records suggest members of the imperial court appreciated Swarovski’s finely cut crystals as elegant gifts within aristocratic society.</p><p> From Austria, the brand expanded globally, becoming a symbol of glamour and refinement. Each crystal is machine-cut with scientific precision for maximum sparkle. Advanced polishing techniques create a radiant, diamond-like shine.<br/>The jewellery blends innovation with contemporary fashion trends. Lightweight yet luxurious, it complements both casual and evening wear. European craftsmanship ensures flawless finishing and symmetry. Designers experiment boldly with colors, shapes, and modern styles. Swarovski gained worldwide fame through Hollywood films and fashion runways. </p><p>Every crystal reflects clarity, brilliance, and technical mastery. It represents accessible luxury for the modern generation. Add Swarovski sparkle to your collection and shine with timeless elegance.</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -1163,7 +1165,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 19,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -1213,6 +1215,7 @@
           "settings": {
             "source": "uploaded",
             "video": "shopify://files/videos/WhatsApp Video 2026-04-10 at 16.45.25.mp4",
+            "video_url": "",
             "video_autoplay": true,
             "video_loop": true,
             "alt": "",
@@ -1276,7 +1279,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 17,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -1326,6 +1329,7 @@
           "settings": {
             "source": "uploaded",
             "video": "shopify://files/videos/WhatsApp Video 2026-04-10 at 16.52.24.mp4",
+            "video_url": "",
             "video_autoplay": true,
             "video_loop": true,
             "alt": "",

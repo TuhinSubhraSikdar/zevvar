@@ -21,13 +21,13 @@
             "spacing": 8,
             "font_size": 14,
             "underline_on_hover": false,
-            "background_color": "#fff7f9",
+            "background_color": "#f5f5dc",
             "text_color": "#2b2b2b",
-            "link_color": "#5a0f2e",
-            "link_hover_color": "#d81b60",
-            "separator_color": "#5a0f2e",
+            "link_color": "#5f6e00",
+            "link_hover_color": "#5f6e00",
+            "separator_color": "#000000",
             "current_page_color": "#0f0f0f",
-            "padding_top": 12,
+            "padding_top": 40,
             "padding_bottom": 28
           },
           "blocks": {}
@@ -332,7 +332,7 @@
                   "settings": {
                     "heading": "Shop with confidence",
                     "open_by_default": false,
-                    "heading_color": "#ad1457",
+                    "heading_color": "#5f6e00",
                     "content_color": "#5a0f2e",
                     "icon_color": "#000000",
                     "icon": "heart",
@@ -374,7 +374,7 @@
                   "settings": {
                     "heading": "Privacy Policy",
                     "open_by_default": false,
-                    "heading_color": "#ad1457",
+                    "heading_color": "#5f6e00",
                     "content_color": "#5a0f2e",
                     "icon_color": "#000000",
                     "icon": "clipboard",
@@ -502,7 +502,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "dryer",
-                        "image_upload": "shopify://shop_images/Non_allergic.png",
+                        "image_upload": "shopify://shop_images/Non_allergic_acb70285-7e53-415d-8d10-4fe667d5d9d8.png",
                         "width": 70,
                         "link": "",
                         "open_in_new_tab": false
@@ -559,7 +559,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "dryer",
-                        "image_upload": "shopify://shop_images/Premium_Metals_Stones.png",
+                        "image_upload": "shopify://shop_images/Premium_Metals_Stones_8775d1a2-9535-483d-9cbb-468d82cd83ce.png",
                         "width": 70,
                         "link": "",
                         "open_in_new_tab": false
@@ -616,7 +616,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "dryer",
-                        "image_upload": "shopify://shop_images/Made_to_Last.png",
+                        "image_upload": "shopify://shop_images/Made_to_Last_4cae2293-c3f2-4edf-8bea-79315ddee4f6.png",
                         "width": 70,
                         "link": "",
                         "open_in_new_tab": false
@@ -720,7 +720,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "dryer",
-                        "image_upload": "shopify://shop_images/Light_Weight.png",
+                        "image_upload": "shopify://shop_images/Light_Weight_a7f93488-2f94-4c0f-8a58-0cd9e79d9612.png",
                         "width": 70,
                         "link": "",
                         "open_in_new_tab": false
@@ -777,7 +777,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "dryer",
-                        "image_upload": "shopify://shop_images/COD_Available.png",
+                        "image_upload": "shopify://shop_images/COD_Available_b5290947-b449-46e8-9eac-526a76390195.png",
                         "width": 70,
                         "link": "",
                         "open_in_new_tab": false
@@ -834,7 +834,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "dryer",
-                        "image_upload": "shopify://shop_images/Handmade_by_Experts.png",
+                        "image_upload": "shopify://shop_images/Handmade_by_Experts_229e0660-6988-4bd0-8504-b20c01fc420a.png",
                         "width": 70,
                         "link": "",
                         "open_in_new_tab": false
@@ -2230,14 +2230,14 @@
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "custom",
                 "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "font_size": "1.125rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--color-foreground)",
+                "color": "var(--color-primary)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,

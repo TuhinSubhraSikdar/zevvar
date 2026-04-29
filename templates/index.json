@@ -12,109 +12,12 @@
     "slideshow_cgNCJw": {
       "type": "slideshow",
       "blocks": {
-        "slide_yEmL7E": {
-          "type": "_slide",
-          "settings": {
-            "media_type_1": "image",
-            "image_1": "shopify://shop_images/Untitled-3.jpg",
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-6",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "padding-block-start": 0,
-            "padding-block-end": 48,
-            "padding-inline-start": 48,
-            "padding-inline-end": 48
-          },
-          "blocks": {
-            "text_kcUtBM": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<h2>New arrivals</h2>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_GtGPKw": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Introducing our latest products, made especially for the season. Shop your favorites before they're gone!</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 20,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_nR8QDt": {
-              "type": "button",
-              "settings": {
-                "label": "Shop now",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_kcUtBM",
-            "text_GtGPKw",
-            "button_nR8QDt"
-          ]
-        },
         "slide_aEj8hM": {
           "type": "_slide",
           "name": "t:names.slide",
           "settings": {
             "media_type_1": "image",
-            "image_1": "shopify://shop_images/Untitled-1.jpg",
+            "image_1": "shopify://shop_images/ChatGPT_Image_Apr_14_2026_05_01_59_PM.png",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -212,7 +115,7 @@
           "name": "t:names.slide",
           "settings": {
             "media_type_1": "image",
-            "image_1": "shopify://shop_images/Untitled-2.jpg",
+            "image_1": "shopify://shop_images/1.png",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -307,7 +210,6 @@
         }
       },
       "block_order": [
-        "slide_yEmL7E",
         "slide_aEj8hM",
         "slide_P3TWV4"
       ],
@@ -367,14 +269,15 @@
       "name": "TSS – Category Rings",
       "settings": {
         "heading": "SHOP BY CATEGORY",
-        "bg_color": "#f2b5c4",
+        "bg_color": "#dcc7a1",
         "outer_ring_color": "#fff7fa",
         "inner_ring_color": "#f7f7f7",
-        "dot_color": "#6b1b3a",
+        "dot_color": "#7e8f00",
         "section_max_width": 1600,
         "padding_top": 20,
-        "padding_bottom": 35,
-        "square_scale": 120
+        "padding_bottom": 20,
+        "square_scale": 120,
+        "heading_gap": 15
       }
     },
     "product_list_themegen": {
@@ -648,7 +551,7 @@
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
         "gap": 28,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-36fb6ada-3d4b-4a9c-b1ee-a74f2ff28670",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -1380,33 +1283,6 @@
     "product_hotspots_pQeAgt": {
       "type": "product-hotspots",
       "blocks": {
-        "hotspot_product_pn7tDi": {
-          "type": "_hotspot-product",
-          "settings": {
-            "collection": "earrings",
-            "x-position": 43,
-            "y-position": 35
-          },
-          "blocks": {}
-        },
-        "hotspot_product_3h6V6J": {
-          "type": "_hotspot-product",
-          "settings": {
-            "collection": "jewellery-sets",
-            "x-position": 50,
-            "y-position": 80
-          },
-          "blocks": {}
-        },
-        "hotspot_product_cc4pRa": {
-          "type": "_hotspot-product",
-          "settings": {
-            "collection": "bracelet-bangles",
-            "x-position": 33,
-            "y-position": 84
-          },
-          "blocks": {}
-        },
         "heading": {
           "type": "text",
           "name": "t:names.heading",
@@ -1435,14 +1311,9 @@
           "blocks": {}
         }
       },
-      "block_order": [
-        "hotspot_product_pn7tDi",
-        "hotspot_product_3h6V6J",
-        "hotspot_product_cc4pRa"
-      ],
       "name": "t:names.product_hotspots",
       "settings": {
-        "image": "shopify://shop_images/Untitled-4_1.jpg",
+        "image": "shopify://shop_images/WhatsApp_Image_2026-03-31_at_17.28.21.jpg",
         "toggle_overlay": false,
         "overlay_color": "#00000026",
         "overlay_style": "solid",
@@ -2009,17 +1880,17 @@
             "customer_name_3": "Priya Sharma",
             "star_rating_3": 5,
             "testimonial_text_3": "The perfect blend of traditional and modern design. These pieces have become my everyday favourites.",
-            "background_color": "#16eded",
+            "background_color": "#c2b280",
             "heading_color": "#0f0f0f",
             "text_color": "#2b2b2b",
             "name_color": "#0f0f0f",
-            "star_color": "#ad1457",
+            "star_color": "#000000",
             "star_empty_color": "#fce4ec",
-            "image_border_color": "#6b1b3a",
-            "dot_color": "#5a0f2e",
-            "dot_active_color": "#d81b60",
-            "nav_button_color": "#ad1457",
-            "nav_button_hover_color": "#d81b60",
+            "image_border_color": "#000000",
+            "dot_color": "#000000",
+            "dot_active_color": "#000000",
+            "nav_button_color": "#000000",
+            "nav_button_hover_color": "#000000",
             "nav_button_icon_color": "#ffffff"
           },
           "blocks": {}
@@ -2049,7 +1920,7 @@
         "border_opacity": 100,
         "border_radius": 0,
         "toggle_overlay": true,
-        "overlay_color": "#16eded",
+        "overlay_color": "#c2b280",
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 0,
