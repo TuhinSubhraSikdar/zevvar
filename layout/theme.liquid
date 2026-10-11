@@ -1,0 +1,587 @@
+<!doctype html>
+<html
+  {% if request.design_mode %}
+    class="shopify-design-mode"
+  {% endif %}
+  lang="{{ request.locale.iso_code }}"
+>
+  <head>
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
+    {% if settings.transition_to_main_product or settings.page_transition_enabled %}
+      <link
+        rel="expect"
+        href="#MainContent"
+        blocking="render"
+        id="view-transition-render-blocker"
+      >
+    {% endif %}
+
+    {%- render 'meta-tags' -%}
+    {%- render 'stylesheets' -%}
+    {%- render 'fonts' -%}
+    {%- render 'scripts' -%}
+    {%- render 'theme-styles-variables' -%}
+    {%- render 'color-schemes' -%}
+
+    {% if request.design_mode %}
+      {%- render 'theme-editor' -%}
+    {% endif %}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+    <div id="header-group">
+      {% sections 'header-group' %}
+    </div>
+<main id="MainContent" role="main" tabindex="-1">
+  {{ content_for_layout }}
+</main>
+
+<!-- =====================================================
+     SHOPIFY CAT MASCOT
+     7 actions x 4 frames
+     Add before </body> in layout/theme.liquid
+====================================================== -->
+
+<style>
+  #shopify-cat {
+    --cat-size: 110px;
+    --cat-bottom: 22px;
+    --cat-right: 22px;
+
+    position: fixed;
+    right: var(--cat-right);
+    bottom: var(--cat-bottom);
+    z-index: 9998;
+    width: var(--cat-size);
+    max-width: 28vw;
+    font-family: inherit;
+    line-height: 1;
+    text-align: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #shopify-cat .cat-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: visible;
+    cursor: pointer;
+    transform-origin: 50% 85%;
+    animation: shopify-cat-float 3s ease-in-out infinite;
+  }
+
+  #shopify-cat #cat-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    filter: drop-shadow(0 5px 5px rgb(0 0 0 / 10%));
+  }
+
+  #shopify-cat .cat-bubble {
+    position: absolute;
+    right: 72%;
+    bottom: 68%;
+    width: max-content;
+    max-width: min(190px, 55vw);
+    padding: 9px 12px;
+    border: 1px solid rgb(0 0 0 / 8%);
+    border-radius: 14px 14px 4px 14px;
+    background: #fff;
+    color: #252525;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    box-shadow: 0 4px 18px rgb(0 0 0 / 10%);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px) scale(.96);
+    transform-origin: bottom right;
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 180ms ease;
+    pointer-events: none;
+  }
+
+  #shopify-cat .cat-bubble.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  #shopify-cat .cat-stage:focus-visible {
+    outline: 2px solid #777;
+    outline-offset: 4px;
+    border-radius: 50%;
+  }
+
+  #shopify-cat .cat-stage:active {
+    transform: scale(.96);
+  }
+
+  @keyframes shopify-cat-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -5px; }
+  }
+
+  @media (max-width: 600px) {
+    #shopify-cat {
+      --cat-size: 82px;
+      --cat-bottom: 14px;
+      --cat-right: 12px;
+    }
+
+    #shopify-cat .cat-bubble {
+      max-width: 145px;
+      font-size: 11px;
+      padding: 7px 9px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-cat .cat-stage {
+      animation: none !important;
+    }
+
+    #shopify-cat .cat-bubble {
+      transition: none !important;
+    }
+  }
+</style>
+
+<div id="shopify-cat" aria-label="Store cat mascot">
+  <div
+    class="cat-stage"
+    id="cat-stage"
+    role="button"
+    tabindex="0"
+    aria-label="Interact with the cat mascot"
+    aria-describedby="cat-bubble"
+  >
+    <img
+      id="cat-video"
+      src="https://cdn.shopify.com/s/files/1/0638/3632/3911/files/cat-idel-1.png?v=1791732572"
+      alt="Cute cat mascot"
+      width="256"
+      height="256"
+      loading="eager"
+      decoding="async"
+      draggable="false"
+    >
+
+    <div
+      class="cat-bubble"
+      id="cat-bubble"
+      role="status"
+      aria-live="polite"
+    >Hi there! 🐾</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const root = document.getElementById('shopify-cat');
+  const stage = document.getElementById('cat-stage');
+  const image = document.getElementById('cat-video');
+  const bubble = document.getElementById('cat-bubble');
+
+  if (!root || !stage || !image || !bubble) return;
+
+  // Prevent duplicate initialization.
+  if (root.dataset.initialized === 'true') return;
+  root.dataset.initialized = 'true';
+
+  // =====================================================
+  // IMAGE FRAMES
+  // Idle has your four real images.
+  // Replace the other placeholder arrays when ready.
+  // =====================================================
+
+  const IDLE_FRAMES = [
+    "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/cat-idel-1.png?v=1791732572",
+    "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/cat-idel-2.png?v=1791732572",
+    "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/cat-idel-3.png?v=1791732572",
+    "https://cdn.shopify.com/s/files/1/0638/3632/3911/files/cat-idel-4.png?v=1791732572"
+  ];
+
+  // Temporary fallback until you add the other action images.
+  const PLACEHOLDER_FRAMES = [
+    IDLE_FRAMES[0],
+    IDLE_FRAMES[0],
+    IDLE_FRAMES[0],
+    IDLE_FRAMES[0]
+  ];
+
+  const FRAMES = {
+    idle: IDLE_FRAMES,
+
+    hover: [...PLACEHOLDER_FRAMES],
+    add: [...PLACEHOLDER_FRAMES],
+    buy: [...PLACEHOLDER_FRAMES],
+    bored: [...PLACEHOLDER_FRAMES],
+    happy: [...PLACEHOLDER_FRAMES],
+    curious: [...PLACEHOLDER_FRAMES]
+  };
+
+  // Time between frames, in milliseconds.
+  const SPEED = {
+    idle: 220,
+    hover: 140,
+    add: 105,
+    buy: 110,
+    bored: 260,
+    happy: 105,
+    curious: 180
+  };
+
+  const MESSAGES = {
+    idle: 'Hi there! 🐾',
+    hover: 'Hey, you found me! 😸',
+    add: 'Yay! Added to your cart! 💖',
+    buy: 'Let’s go! ✨',
+    bored: 'Psst… still browsing? 😴',
+    happy: 'That makes me happy! 😻',
+    curious: 'Ooh, what’s this? 👀'
+  };
+
+  const reducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  );
+
+  let currentAction = 'idle';
+  let frameIndex = 0;
+  let animationTimer = null;
+  let inactivityTimer = null;
+  let returnTimer = null;
+  let bubbleTimer = null;
+  let actionToken = 0;
+  let lastActivity = Date.now();
+
+  // Preload all configured images.
+  const preloaded = new Map();
+
+  Object.values(FRAMES).flat().forEach((src) => {
+    if (!src || preloaded.has(src)) return;
+
+    const img = new Image();
+    img.src = src;
+    preloaded.set(src, img);
+  });
+
+  function clearAnimation() {
+    if (animationTimer !== null) {
+      window.clearTimeout(animationTimer);
+      animationTimer = null;
+    }
+  }
+
+  function clearReturnTimer() {
+    if (returnTimer !== null) {
+      window.clearTimeout(returnTimer);
+      returnTimer = null;
+    }
+  }
+
+  function showBubble(action, duration = 2200) {
+    bubble.textContent = MESSAGES[action] || MESSAGES.idle;
+    bubble.classList.add('is-visible');
+
+    if (bubbleTimer !== null) {
+      window.clearTimeout(bubbleTimer);
+    }
+
+    if (duration > 0) {
+      bubbleTimer = window.setTimeout(() => {
+        bubble.classList.remove('is-visible');
+        bubbleTimer = null;
+      }, duration);
+    }
+  }
+
+  function hideBubble() {
+    if (bubbleTimer !== null) {
+      window.clearTimeout(bubbleTimer);
+      bubbleTimer = null;
+    }
+
+    bubble.classList.remove('is-visible');
+  }
+
+  function displayFrame(action, index) {
+    const frames = FRAMES[action];
+    if (!frames || frames.length === 0) return;
+
+    const src = frames[index % frames.length];
+    if (!src) return;
+
+    // Compare the resolved URL to avoid skipping frames incorrectly.
+    if (image.src !== new URL(src, document.baseURI).href) {
+      image.src = src;
+    }
+  }
+
+  function playFrame(action, token) {
+    if (token !== actionToken || currentAction !== action) return;
+
+    const frames = FRAMES[action];
+    if (!frames || frames.length < 2) return;
+
+    frameIndex = (frameIndex + 1) % frames.length;
+    displayFrame(action, frameIndex);
+
+    if (!reducedMotion.matches) {
+      animationTimer = window.setTimeout(() => {
+        playFrame(action, token);
+      }, SPEED[action] || 150);
+    }
+  }
+
+  function setAction(action, options = {}) {
+    if (!FRAMES[action]) action = 'idle';
+
+    const {
+      message = true,
+      messageDuration = 2200,
+      returnToIdle = false,
+      returnDelay = 1600
+    } = options;
+
+    clearAnimation();
+    clearReturnTimer();
+
+    actionToken += 1;
+    const token = actionToken;
+
+    currentAction = action;
+    frameIndex = 0;
+
+    // Show the first frame immediately.
+    displayFrame(action, 0);
+
+    if (message) {
+      showBubble(action, messageDuration);
+    }
+
+    // Start the frame loop.
+    if (!reducedMotion.matches && FRAMES[action].length > 1) {
+      animationTimer = window.setTimeout(() => {
+        playFrame(action, token);
+      }, SPEED[action] || 150);
+    }
+
+    if (returnToIdle) {
+      returnTimer = window.setTimeout(() => {
+        if (token === actionToken) {
+          setAction('idle', { message: false });
+          resetInactivity();
+        }
+      }, returnDelay);
+    }
+  }
+
+  function resetInactivity() {
+    lastActivity = Date.now();
+
+    if (inactivityTimer !== null) {
+      window.clearTimeout(inactivityTimer);
+    }
+
+    inactivityTimer = window.setTimeout(() => {
+      if (Date.now() - lastActivity >= 7000) {
+        setAction('bored', {
+          message: true,
+          messageDuration: 2600,
+          returnToIdle: true,
+          returnDelay: 3000
+        });
+      }
+    }, 7000);
+  }
+
+  function recordActivity() {
+    resetInactivity();
+
+    if (currentAction === 'bored') {
+      setAction('idle', { message: false });
+    }
+  }
+
+  // =====================================================
+  // CAT INTERACTIONS
+  // =====================================================
+
+  stage.addEventListener('mouseenter', () => {
+    recordActivity();
+
+    setAction('hover', {
+      message: true,
+      messageDuration: 1600
+    });
+  });
+
+  stage.addEventListener('mouseleave', () => {
+    hideBubble();
+    setAction('idle', { message: false });
+    resetInactivity();
+  });
+
+  stage.addEventListener('focus', () => {
+    recordActivity();
+
+    setAction('curious', {
+      message: true,
+      messageDuration: 2000,
+      returnToIdle: true,
+      returnDelay: 2000
+    });
+  });
+
+  stage.addEventListener('click', () => {
+    recordActivity();
+
+    setAction('curious', {
+      message: true,
+      messageDuration: 2200,
+      returnToIdle: true,
+      returnDelay: 2200
+    });
+  });
+
+  stage.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+
+      recordActivity();
+
+      setAction('curious', {
+        message: true,
+        messageDuration: 2200,
+        returnToIdle: true,
+        returnDelay: 2200
+      });
+    }
+  });
+
+  // =====================================================
+  // SHOPIFY ADD-TO-CART AND BUY BUTTONS
+  // =====================================================
+
+  const ADD_BUTTONS = [
+    'form[action*="/cart/add"] button[type="submit"]',
+    'form[action*="/cart/add"] [type="submit"]',
+    'button[name="add"]',
+    '.add-to-cart',
+    '[data-add-to-cart]',
+    '[data-product-submit]'
+  ].join(',');
+
+  const BUY_BUTTONS = [
+    '.shopify-payment-button__button',
+    '[data-buy-now]',
+    'button[name="checkout"]',
+    'form[action="/checkout"] [type="submit"]'
+  ].join(',');
+
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element
+      ? event.target
+      : event.target?.parentElement;
+
+    if (!target || target.closest('#shopify-cat')) return;
+
+    if (target.closest(BUY_BUTTONS)) {
+      setAction('buy', {
+        message: true,
+        messageDuration: 1800,
+        returnToIdle: true,
+        returnDelay: 2200
+      });
+
+      resetInactivity();
+      return;
+    }
+
+    if (target.closest(ADD_BUTTONS)) {
+      setAction('add', {
+        message: true,
+        messageDuration: 2200,
+        returnToIdle: true,
+        returnDelay: 1200
+      });
+
+      resetInactivity();
+    }
+  }, true);
+
+  // Listen for common cart events emitted by some themes.
+  [
+    'cart:updated',
+    'cart:refresh',
+    'product:added'
+  ].forEach((eventName) => {
+    document.addEventListener(eventName, () => {
+      setAction('happy', {
+        message: true,
+        messageDuration: 2000,
+        returnToIdle: true,
+        returnDelay: 2200
+      });
+
+      resetInactivity();
+    });
+  });
+
+  // Reset inactivity when visitors interact with the page.
+  window.addEventListener('pointerdown', recordActivity, {
+    passive: true
+  });
+
+  window.addEventListener('keydown', recordActivity);
+  window.addEventListener('scroll', recordActivity, {
+    passive: true
+  });
+
+  // Respect changes to the device's reduced-motion preference.
+  if (typeof reducedMotion.addEventListener === 'function') {
+    reducedMotion.addEventListener('change', () => {
+      clearAnimation();
+
+      if (!reducedMotion.matches) {
+        const token = actionToken;
+
+        animationTimer = window.setTimeout(() => {
+          playFrame(currentAction, token);
+        }, SPEED[currentAction] || 150);
+      }
+    });
+  }
+
+  // =====================================================
+  // START THE MASCOT
+  // =====================================================
+
+  setAction('idle', { message: false });
+  resetInactivity();
+
+})();
+</script>
+
+  </body>
+</html>

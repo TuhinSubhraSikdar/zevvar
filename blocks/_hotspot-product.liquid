@@ -1,0 +1,102 @@
+
+{% liquid
+  assign hotspot_collection = block.settings.collection
+  assign hotspot_title = hotspot_collection.title | default: 'Collections'
+%}
+
+<product-hotspot-component
+  class="hotspot{% if hotspot_collection == blank and request.design_mode == false %} hotspot--hidden-touch hidden--mobile{% endif %}"
+  style="
+    left: calc({{ block.settings.x-position }}% - var(--button-size) / 2);
+    top: calc({{ block.settings.y-position }}% - var(--button-size) / 2);
+    --hotspot-bg: {{ section.settings.hotspot_color }};
+    --hotspot-bullseye: {{ section.settings.bullseye_color }};
+  "
+  data-product-url="{{ hotspot_collection.url }}"
+  data-product-title="{{ hotspot_title | escape }}"
+  data-id="{{ block.id }}"
+  {{ block.shopify_attributes }}
+>
+  <button
+    class="hotspot-trigger"
+    aria-label="Open collection"
+    ref="trigger"
+    on:click="/handleHotspotClick"
+    style="anchor-name: --hotspot-trigger-{{ block.id }};"
+  ></button>
+
+  <dialog class="hotspot-dialog" ref="dialog">
+    {% if hotspot_collection != blank %}
+      <a
+        href="{{ hotspot_collection.url }}"
+        class="hotspot-dialog__link"
+        aria-label="{{ hotspot_title | escape }}"
+      ></a>
+    {% endif %}
+
+    <div class="hotspot-dialog__collection">
+      {% if hotspot_collection.image %}
+        {% render 'image',
+          image: hotspot_collection.image,
+          class: 'hotspot-dialog__collection-image'
+        %}
+      {% else %}
+        {{ 'collection-1' | placeholder_svg_tag }}
+      {% endif %}
+
+      <div class="hotspot-dialog__collection-content">
+        <h2 class="hotspot-dialog__collection-title h5">
+          {{ hotspot_title }}
+        </h2>
+
+        <div class="hotspot-dialog__collection-meta">
+          {{ hotspot_collection.products_count }} products
+        </div>
+
+        <a href="{{ hotspot_collection.url }}" class="button button--primary">
+          View Collection
+        </a>
+      </div>
+    </div>
+  </dialog>
+</product-hotspot-component>
+
+
+
+{% schema %}
+{
+  "name": "Collection Hotspot",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select collection"
+    },
+    {
+      "type": "range",
+      "id": "x-position",
+      "label": "X position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "y-position",
+      "label": "Y position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Hotspot"
+    }
+  ]
+}
+
+{% endschema %}
