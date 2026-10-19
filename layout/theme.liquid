@@ -46,11 +46,17 @@
 <main id="MainContent" role="main" tabindex="-1">
   {{ content_for_layout }}
 </main>
+ {% sections 'footer-group' %}
+
+    {% render 'search-modal' %}
+
+    {% if settings.quick_add or settings.mobile_quick_add %}
+      {% render 'quick-add-modal' %}
+    {% endif %}
 
 <!-- =====================================================
      SHOPIFY CAT MASCOT
      7 actions x 4 frames
-     Add before </body> in layout/theme.liquid
 ====================================================== -->
 
 <style>
