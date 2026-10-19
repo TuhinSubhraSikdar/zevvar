@@ -1,0 +1,123 @@
+
+/* ZEVVAR Champagne Bubble Cursor */
+
+:root {
+  --zevvar-cursor-gold: 201, 161, 90;
+  --zevvar-cursor-pink: 212, 20, 90;
+}
+
+/* Only enable the custom cursor on devices with a fine pointer */
+@media (hover: hover) and (pointer: fine) {
+  body.zevvar-custom-cursor,
+  body.zevvar-custom-cursor a,
+  body.zevvar-custom-cursor button,
+  body.zevvar-custom-cursor input,
+  body.zevvar-custom-cursor select,
+  body.zevvar-custom-cursor textarea,
+  body.zevvar-custom-cursor label,
+  body.zevvar-custom-cursor [role="button"] {
+    cursor: none !important;
+  }
+
+  .zv-cursor,
+  .zv-cursor-ripple {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 2147483647;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  .zv-cursor {
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(var(--zevvar-cursor-gold), 0.9);
+    background:
+      radial-gradient(
+        circle at 32% 27%,
+        rgba(255, 255, 255, 0.82) 0%,
+        rgba(255, 255, 255, 0.30) 14%,
+        rgba(255, 235, 197, 0.20) 40%,
+        rgba(var(--zevvar-cursor-gold), 0.12) 72%,
+        rgba(var(--zevvar-cursor-gold), 0.06) 100%
+      );
+    box-shadow:
+      0 0 8px rgba(var(--zevvar-cursor-gold), 0.15),
+      inset 0 0 5px rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    transition:
+      width 220ms ease,
+      height 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease,
+      box-shadow 220ms ease,
+      opacity 160ms ease;
+    will-change: left, top, width, height;
+  }
+
+  .zv-cursor.is-visible {
+    opacity: 1;
+  }
+
+  .zv-cursor.is-hovering {
+    width: 42px;
+    height: 42px;
+    border-color: rgba(var(--zevvar-cursor-gold), 1);
+    background:
+      radial-gradient(
+        circle at 32% 27%,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 242, 220, 0.4) 23%,
+        rgba(var(--zevvar-cursor-gold), 0.2) 70%,
+        rgba(var(--zevvar-cursor-gold), 0.1) 100%
+      );
+    box-shadow:
+      0 0 12px rgba(var(--zevvar-cursor-gold), 0.42),
+      0 0 24px rgba(var(--zevvar-cursor-gold), 0.16),
+      inset 0 0 8px rgba(255, 255, 255, 0.45);
+  }
+
+  .zv-cursor.is-pressed {
+    width: 16px;
+    height: 16px;
+    background: rgba(var(--zevvar-cursor-pink), 0.3);
+    box-shadow:
+      0 0 14px rgba(var(--zevvar-cursor-pink), 0.42),
+      inset 0 0 5px rgba(255, 255, 255, 0.6);
+  }
+
+  .zv-cursor-ripple {
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(var(--zevvar-cursor-gold), 0.9);
+    background: rgba(var(--zevvar-cursor-gold), 0.08);
+  }
+
+  .zv-cursor-ripple.is-rippling {
+    animation: zv-cursor-ripple 550ms ease-out forwards;
+  }
+
+  @keyframes zv-cursor-ripple {
+    0% {
+      opacity: 0.8;
+      transform: translate(-50%, -50%) scale(0.4);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(3.2);
+    }
+  }
+}
+
+/* Do not animate for visitors who request reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .zv-cursor,
+  .zv-cursor-ripple {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -616,299 +616,6 @@
         "padding-block-end": 48
       }
     },
-    "section_igedzF": {
-      "type": "section",
-      "blocks": {
-        "image_kKpdyy": {
-          "type": "image",
-          "name": "t:names.image",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-03-31_at_17.27.48.jpg",
-            "link": "",
-            "image_ratio": "landscape",
-            "width": "custom",
-            "custom_width": 35,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "group_eVMxxb": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "collection_card_CA8mVG": {
-              "type": "collection-card",
-              "name": "t:names.collection_card",
-              "settings": {
-                "collection": "bracelet-bangles",
-                "placement": "below_image",
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "collection_card_gap": 8,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {
-                "collection_title_mVDQGf": {
-                  "type": "collection-title",
-                  "settings": {
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h4",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "collection-card-image": {
-                  "type": "_collection-card-image",
-                  "static": true,
-                  "settings": {
-                    "image_ratio": "square",
-                    "toggle_overlay": false,
-                    "overlay_color": "#00000026",
-                    "overlay_style": "solid",
-                    "gradient_direction": "to top",
-                    "border": "none",
-                    "border_width": 1,
-                    "border_opacity": 100,
-                    "border_radius": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "collection_title_mVDQGf"
-              ]
-            },
-            "collection_card_eX6h7D": {
-              "type": "collection-card",
-              "name": "t:names.collection_card",
-              "settings": {
-                "collection": "jewellery-sets",
-                "placement": "below_image",
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "collection_card_gap": 8,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {
-                "collection_title_9Cbnnt": {
-                  "type": "collection-title",
-                  "settings": {
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h4",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "collection-card-image": {
-                  "type": "_collection-card-image",
-                  "static": true,
-                  "settings": {
-                    "image_ratio": "square",
-                    "toggle_overlay": false,
-                    "overlay_color": "#00000026",
-                    "overlay_style": "solid",
-                    "gradient_direction": "to top",
-                    "border": "none",
-                    "border_width": 1,
-                    "border_opacity": 100,
-                    "border_radius": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "collection_title_9Cbnnt"
-              ]
-            },
-            "collection_card_jW874F": {
-              "type": "collection-card",
-              "name": "t:names.collection_card",
-              "settings": {
-                "collection": "earrings",
-                "placement": "below_image",
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "collection_card_gap": 8,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {
-                "collection_title_cdReCR": {
-                  "type": "collection-title",
-                  "settings": {
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h4",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "collection-card-image": {
-                  "type": "_collection-card-image",
-                  "static": true,
-                  "settings": {
-                    "image_ratio": "square",
-                    "toggle_overlay": false,
-                    "overlay_color": "#00000026",
-                    "overlay_style": "solid",
-                    "gradient_direction": "to top",
-                    "border": "none",
-                    "border_width": 1,
-                    "border_opacity": 100,
-                    "border_radius": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "collection_title_cdReCR"
-              ]
-            }
-          },
-          "block_order": [
-            "collection_card_CA8mVG",
-            "collection_card_eX6h7D",
-            "collection_card_jW874F"
-          ]
-        }
-      },
-      "block_order": [
-        "image_kKpdyy",
-        "group_eVMxxb"
-      ],
-      "name": "t:names.custom_section",
-      "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "full-width",
-        "section_height": "small",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "section_6Ff4pa": {
       "type": "section",
       "blocks": {
@@ -1741,6 +1448,69 @@
         "padding-block-end": 48
       }
     },
+    "zevvar_collections_showcase_3cyrrq": {
+      "type": "zevvar-collections-showcase",
+      "blocks": {
+        "collection_card_pdPa87": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "pendant-sets",
+            "title": "",
+            "custom_link": ""
+          }
+        },
+        "collection_card_tiGknr": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "bracelet-bangles",
+            "title": "",
+            "custom_link": ""
+          }
+        },
+        "collection_card_djBGR3": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "earrings",
+            "title": "",
+            "custom_link": ""
+          }
+        },
+        "collection_card_KnVF8F": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "jewellery-sets",
+            "title": "",
+            "custom_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_card_pdPa87",
+        "collection_card_tiGknr",
+        "collection_card_djBGR3",
+        "collection_card_KnVF8F"
+      ],
+      "name": "ZEVVAR collection",
+      "settings": {
+        "eyebrow": "Our Collections",
+        "heading": "Embrace\nTimeless Beauty",
+        "description": "<p>From classic elegance to modern minimalism, find the perfect piece for every occasion.</p>",
+        "show_button": true,
+        "button_label": "Explore Collections",
+        "button_link": "shopify://collections",
+        "show_ornament": true,
+        "show_card_link": true,
+        "card_link_label": "Shop Now",
+        "intro_width": 2,
+        "desktop_height": 400,
+        "mobile_card_height": 230,
+        "card_gap": 5,
+        "background_color": "#79052E",
+        "gold_color": "#C9A15A",
+        "text_color": "#F7F2E8",
+        "card_text_color": "#FFFFFF"
+      }
+    },
     "product_recommendations_rx8wGg": {
       "type": "product-recommendations",
       "blocks": {
@@ -2472,9 +2242,9 @@
     "tss_shop_by_category_rings_3TMhQE",
     "product_list_themegen",
     "collection_list_ARGnWA",
-    "section_igedzF",
     "section_6Ff4pa",
     "section_TLDzjV",
+    "zevvar_collections_showcase_3cyrrq",
     "product_hotspots_pQeAgt",
     "product_list_AEyakR",
     "product_recommendations_rx8wGg",
