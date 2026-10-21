@@ -96,7 +96,7 @@
         "localization_row": "top",
         "section_width": "full-width",
         "section_height": "standard",
-        "enable_sticky_header": "always",
+        "enable_sticky_header": "scroll-up",
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
@@ -110,10 +110,25 @@
         "enable_transparent_header_collection": true,
         "collection_color_scheme": "default"
       }
+    },
+    "divider_788pKM": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
     }
   },
   "order": [
     "header_announcements_ip8NCD",
-    "header_section"
+    "header_section",
+    "divider_788pKM"
   ]
 }

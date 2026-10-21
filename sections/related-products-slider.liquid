@@ -1,0 +1,1213 @@
+{%- comment -%}
+  Related Products Slider
+  -----------------------
+  Save as: sections/related-products-slider.liquid
+  Works on: product pages (best), or any page when a "Source product" or "Fallback collection" is set.
+
+  How products are chosen:
+  1. Shopify's Product Recommendations API (related / complementary) for the product being viewed.
+  2. If Shopify has no recommendations yet, products from the "Fallback collection" are shown.
+  3. If neither exists, the section hides itself on the live store.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+
+  assign source_product = product
+  if source_product == blank
+    assign source_product = section.settings.source_product
+  endif
+
+  assign fallback = section.settings.fallback_collection
+  assign limit = section.settings.products_limit
+  assign limit_plus = limit | plus: 1
+
+  assign spv_d = section.settings.slides_desktop
+  assign spv_t = section.settings.slides_tablet
+  assign spv_m = section.settings.slides_mobile
+
+  assign items = blank
+  assign needs_fetch = false
+
+  if recommendations.performed
+    if recommendations.products_count > 0
+      assign items = recommendations.products
+    elsif fallback != blank
+      assign items = fallback.products
+    endif
+  elsif source_product != blank
+    assign needs_fetch = true
+  elsif fallback != blank
+    assign items = fallback.products
+  endif
+
+  assign view_all_url = blank
+  if fallback != blank
+    assign view_all_url = fallback.url
+  elsif source_product != blank and source_product.collections.size > 0
+    assign view_all_url = source_product.collections.first.url
+  endif
+
+  capture img_sizes
+    echo '(min-width: 1024px) '
+    echo 100 | divided_by: spv_d | round
+    echo 'vw, (min-width: 750px) '
+    echo 100 | divided_by: spv_t | round
+    echo 'vw, '
+    echo 100 | divided_by: spv_m | round
+    echo 'vw'
+  endcapture
+
+  case section.settings.aspect_ratio
+    when 'square'
+      assign ratio = '1 / 1'
+    when 'landscape'
+      assign ratio = '4 / 3'
+    when 'tall'
+      assign ratio = '2 / 3'
+    else
+      assign ratio = '4 / 5'
+  endcase
+-%}
+
+{%- style -%}
+  .rps-{{ sid }} {
+    --rps-bg: {{ section.settings.bg_color }};
+    --rps-heading: {{ section.settings.heading_color }};
+    --rps-text: {{ section.settings.text_color }};
+    --rps-price: {{ section.settings.price_color }};
+    --rps-sale: {{ section.settings.sale_color }};
+    --rps-badge-bg: {{ section.settings.badge_bg }};
+    --rps-badge-text: {{ section.settings.badge_text }};
+    --rps-btn-bg: {{ section.settings.button_bg }};
+    --rps-btn-text: {{ section.settings.button_text }};
+    --rps-btn-hover: {{ section.settings.button_hover_bg }};
+    --rps-arrow-bg: {{ section.settings.arrow_bg }};
+    --rps-arrow-color: {{ section.settings.arrow_color }};
+    --rps-ratio: {{ ratio }};
+    --rps-img-radius: {{ section.settings.image_radius }}px;
+    --rps-btn-radius: {{ section.settings.button_radius }}px;
+    --rps-spv: {{ spv_m }};
+    --rps-gap: {{ section.settings.gap_mobile }}px;
+    --rps-side: 16px;
+    --rps-bleed: 16px;
+    --rps-title-size: {{ section.settings.heading_size_mobile }}px;
+    background: var(--rps-bg);
+    color: var(--rps-text);
+    padding-top: {{ section.settings.padding_top | times: 0.6 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.6 | round }}px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 750px) {
+    .rps-{{ sid }} {
+      --rps-spv: {{ spv_t }};
+      --rps-gap: {{ section.settings.gap_desktop | times: 0.75 | round }}px;
+      --rps-side: 24px;
+      --rps-bleed: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .rps-{{ sid }} {
+      --rps-spv: {{ spv_d }};
+      --rps-gap: {{ section.settings.gap_desktop }}px;
+      --rps-side: 40px;
+      --rps-bleed: 0px;
+      --rps-title-size: {{ section.settings.heading_size }}px;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  {%- if section.settings.heading_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+    .rps-{{ sid }} .rps__title {
+      font-family: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      font-weight: {{ section.settings.heading_font.weight }};
+      font-style: {{ section.settings.heading_font.style }};
+    }
+  {%- endif -%}
+
+  {%- if section.settings.width == 'page' -%}
+    .rps-{{ sid }} .rps__container { max-width: var(--page-width, 1280px); }
+  {%- endif -%}
+{%- endstyle -%}
+
+<style>
+  .rps-section[hidden] { display: none !important; }
+  .rps { display: block; }
+  .rps *, .rps *::before, .rps *::after { box-sizing: border-box; }
+
+  .rps__container {
+    margin: 0 auto;
+    padding-inline: var(--rps-side);
+  }
+
+  /* ---------- Header ---------- */
+  .rps__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .rps--center .rps__head { flex-direction: column; align-items: center; text-align: center; }
+  .rps__title {
+    margin: 0;
+    color: var(--rps-heading);
+    font-size: var(--rps-title-size);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+  .rps__sub {
+    margin: 6px 0 0;
+    max-width: 60ch;
+    font-size: 15px;
+    line-height: 1.5;
+    opacity: .75;
+  }
+  .rps__controls { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .rps__all {
+    color: var(--rps-heading);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+  .rps__all:hover { text-decoration-thickness: 2px; }
+
+  .rps__arrows { display: none; gap: 8px; }
+  .rps--arrows-mobile .rps__arrows { display: flex; }
+  @media (min-width: 1024px) { .rps--arrows .rps__arrows { display: flex; } }
+  .rps.is-static .rps__arrows { display: none !important; }
+
+  .rps__arrow {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(0,0,0,.14);
+    border-radius: 50%;
+    background: var(--rps-arrow-bg);
+    color: var(--rps-arrow-color);
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .rps__arrow svg { width: 20px; height: 20px; }
+  .rps__arrow--prev svg { transform: rotate(180deg); }
+  .rps__arrow:hover:not(:disabled) { box-shadow: 0 4px 14px rgba(0,0,0,.16); transform: translateY(-1px); }
+  .rps__arrow:disabled { opacity: .35; cursor: default; }
+  .rps__arrow:focus-visible,
+  .rps__all:focus-visible,
+  .rps__add:focus-visible,
+  .rps__track:focus-visible,
+  .rps__link:focus-visible { outline: 2px solid var(--rps-heading); outline-offset: 3px; }
+
+  /* ---------- Track ---------- */
+  .rps__track {
+    display: flex;
+    gap: var(--rps-gap);
+    margin: 0 calc(-1 * var(--rps-bleed));
+    padding: 4px var(--rps-bleed) 8px;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--rps-bleed);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+  }
+  .rps__track::-webkit-scrollbar { display: none; }
+  .rps__track.is-dragging { scroll-snap-type: none; cursor: grabbing; scroll-behavior: auto; user-select: none; }
+  .rps__track--skeleton { overflow: hidden; cursor: default; }
+
+  .rps__item {
+    flex: 0 0 calc((100% - (var(--rps-spv) - 1) * var(--rps-gap)) / var(--rps-spv));
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  /* ---------- Card ---------- */
+  .rps__media {
+    position: relative;
+    aspect-ratio: var(--rps-ratio);
+    border-radius: var(--rps-img-radius);
+    background: #f1f1f1;
+    overflow: hidden;
+  }
+  .rps__link { display: block; width: 100%; height: 100%; color: inherit; text-decoration: none; }
+  .rps__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-user-drag: none;
+    user-select: none;
+    transition: opacity .45s ease, transform .6s ease;
+  }
+  .rps__img--hover { opacity: 0; }
+  @media (hover: hover) and (pointer: fine) {
+    .rps__item:hover .rps__img--main { transform: scale(1.03); }
+    .rps__item:hover .rps__img--hover { opacity: 1; }
+    .rps__item:hover .rps__img--hover ~ .rps__img--main,
+    .rps__item:hover .rps__media:has(.rps__img--hover) .rps__img--main { transform: none; }
+  }
+  .rps__placeholder { width: 100%; height: 100%; display: block; background: #e6e6e6; }
+  .rps__placeholder svg { width: 100%; height: 100%; fill: #b5b5b5; }
+
+  .rps__badges { position: absolute; top: 10px; left: 10px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+  .rps__badge {
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--rps-badge-bg);
+    color: var(--rps-badge-text);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .rps__badge--sale { background: var(--rps-sale); color: #fff; }
+
+  /* Quick add: always visible on touch, appears on hover for mouse users */
+  .rps__add {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: var(--rps-btn-radius);
+    background: var(--rps-btn-bg);
+    color: var(--rps-btn-text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .2s ease, opacity .25s ease, transform .25s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .rps__add:hover:not(:disabled) { background: var(--rps-btn-hover); }
+  .rps__add:disabled { cursor: default; opacity: .7; }
+  .rps__add.is-added { background: #1f7a45; color: #fff; }
+  .rps__add.is-error { background: var(--rps-sale); color: #fff; }
+  @media (hover: hover) and (pointer: fine) {
+    .rps__add { opacity: 0; transform: translateY(8px); }
+    .rps__item:hover .rps__add,
+    .rps__item:focus-within .rps__add,
+    .rps__add.is-added,
+    .rps__add.is-error { opacity: 1; transform: none; }
+  }
+
+  .rps__info { padding-top: 12px; }
+  .rps--center .rps__info { text-align: center; }
+  .rps__vendor { margin: 0 0 3px; font-size: 13px; opacity: .65; }
+  .rps__name {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .rps__name a { color: var(--rps-heading); text-decoration: none; }
+  .rps__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .rps__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin-top: 6px; font-size: 15px; color: var(--rps-price); }
+  .rps--center .rps__price { justify-content: center; }
+  .rps__price-now { font-weight: 600; }
+  .rps__price-now--sale { color: var(--rps-sale); }
+  .rps__price-was { font-size: 13px; opacity: .6; }
+
+  /* ---------- Progress bar ---------- */
+  .rps__progress {
+    height: 3px;
+    margin-top: 14px;
+    border-radius: 3px;
+    background: rgba(0,0,0,.12);
+    overflow: hidden;
+  }
+  @supports (background: color-mix(in srgb, red 10%, blue)) {
+    .rps__progress { background: color-mix(in srgb, var(--rps-text) 15%, transparent); }
+  }
+  .rps__bar { height: 100%; width: 30%; border-radius: 3px; background: var(--rps-heading); transform-origin: left; will-change: transform; }
+  .rps.is-static .rps__progress,
+  .rps--loading .rps__progress { display: none; }
+
+  /* ---------- Skeleton ---------- */
+  .rps__sk {
+    position: relative;
+    overflow: hidden;
+    background: #ececec;
+    border-radius: 6px;
+  }
+  .rps__sk::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+    animation: rps-shimmer 1.4s infinite;
+  }
+  .rps__media.rps__sk { border-radius: var(--rps-img-radius); }
+  .rps__sk-line { height: 14px; margin-top: 12px; width: 85%; }
+  .rps__sk-line--short { width: 40%; margin-top: 8px; }
+  @keyframes rps-shimmer { to { transform: translateX(100%); } }
+
+  .rps__note { margin: 0; padding: 24px; border: 1px dashed rgba(0,0,0,.25); border-radius: 10px; text-align: center; font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rps__img, .rps__add, .rps__arrow { transition: none; }
+    .rps__sk::after { animation: none; }
+    .rps__track { scroll-behavior: auto; }
+  }
+</style>
+
+{%- if items != blank or needs_fetch or request.design_mode -%}
+<section class="rps-section rps-{{ sid }}" id="rps-{{ sid }}" aria-label="{{ section.settings.heading | escape }}">
+  <div class="rps__container">
+    <related-products-slider
+      class="rps{% if section.settings.show_arrows %} rps--arrows{% endif %}{% if section.settings.show_arrows_mobile %} rps--arrows-mobile{% endif %}{% if section.settings.text_align == 'center' %} rps--center{% endif %}{% if needs_fetch %} rps--loading{% endif %}"
+      {% if needs_fetch %}
+        data-url="{{ routes.product_recommendations_url }}?section_id={{ sid }}&product_id={{ source_product.id }}&limit={{ limit }}&intent={{ section.settings.intent }}"
+      {% endif %}
+      {% if source_product != blank %}data-product-id="{{ source_product.id }}"{% endif %}
+      data-limit="{{ limit }}"
+      {% if section.settings.autoplay %}data-autoplay="true" data-delay="{{ section.settings.autoplay_delay | times: 1000 }}"{% endif %}
+      data-after="{{ section.settings.after_add }}"
+      data-added-label="{{ 'Added' | escape }}"
+    >
+      {%- if section.settings.heading != blank or section.settings.subheading != blank or view_all_url != blank -%}
+        <div class="rps__head">
+          <div class="rps__titles">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="rps__title">{{ section.settings.heading | escape }}</h2>
+            {%- endif -%}
+            {%- if section.settings.subheading != blank -%}
+              <p class="rps__sub">{{ section.settings.subheading | escape }}</p>
+            {%- endif -%}
+          </div>
+          <div class="rps__controls">
+            {%- if section.settings.show_view_all and view_all_url != blank -%}
+              <a class="rps__all" href="{{ view_all_url }}">{{ section.settings.view_all_label | default: 'View all' | escape }}</a>
+            {%- endif -%}
+            <div class="rps__arrows">
+              <button type="button" class="rps__arrow rps__arrow--prev" data-rps-prev aria-label="Previous products" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="rps__arrow rps__arrow--next" data-rps-next aria-label="Next products">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if items != blank -%}
+        <ul class="rps__track" role="list" tabindex="0" aria-roledescription="carousel" aria-label="{{ section.settings.heading | escape }}">
+          {%- for rp in items limit: limit_plus -%}
+            {%- liquid
+              assign on_sale = false
+              if rp.compare_at_price > rp.price and rp.available
+                assign on_sale = true
+                assign pct = rp.compare_at_price | minus: rp.price | times: 100.0 | divided_by: rp.compare_at_price | round
+              endif
+              assign second = rp.media[1]
+              assign main_alt = rp.featured_media.alt | default: rp.title
+              assign show_badge = false
+              if section.settings.show_badges
+                if on_sale or rp.available == false
+                  assign show_badge = true
+                endif
+              endif
+            -%}
+            <li class="rps__item" data-product-id="{{ rp.id }}">
+              <div class="rps__media">
+                {%- if section.settings.show_badges and on_sale or section.settings.show_badges and rp.available == false -%}
+                  <div class="rps__badges">
+                    {%- if rp.available == false -%}
+                      <span class="rps__badge">Sold out</span>
+                    {%- elsif on_sale -%}
+                      <span class="rps__badge rps__badge--sale">-{{ pct }}%</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                <a class="rps__link" href="{{ rp.url }}" aria-label="{{ rp.title | escape }}" draggable="false">
+                  {%- if rp.featured_media -%}
+                    {{
+                      rp.featured_media
+                      | image_url: width: 900
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '240, 360, 480, 600, 800, 900',
+                        sizes: img_sizes,
+                        class: 'rps__img rps__img--main',
+                        alt: rp.featured_media.alt | default: rp.title,
+                        draggable: 'false'
+                    }}
+                    {%- if section.settings.show_second_image and second != blank and second.media_type == 'image' -%}
+                      {{
+                        second
+                        | image_url: width: 900
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '240, 360, 480, 600, 800, 900',
+                          sizes: img_sizes,
+                          class: 'rps__img rps__img--hover',
+                          alt: '',
+                          draggable: 'false'
+                      }}
+                    {%- endif -%}
+                  {%- else -%}
+                    <span class="rps__placeholder">{{ 'product-1' | placeholder_svg_tag }}</span>
+                  {%- endif -%}
+                </a>
+
+                {%- if section.settings.show_quick_add -%}
+                  {%- if rp.available == false -%}
+                    <button type="button" class="rps__add" disabled><span class="rps__add-label">Sold out</span></button>
+                  {%- elsif rp.variants.size == 1 -%}
+                    <button type="button" class="rps__add" data-rps-add data-variant-id="{{ rp.variants.first.id }}">
+                      <span class="rps__add-label">{{ section.settings.add_label | default: 'Add to cart' | escape }}</span>
+                    </button>
+                  {%- else -%}
+                    <a class="rps__add" href="{{ rp.url }}"><span class="rps__add-label">Choose options</span></a>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+
+              <div class="rps__info">
+                {%- if section.settings.show_vendor and rp.vendor != blank -%}
+                  <p class="rps__vendor">{{ rp.vendor | escape }}</p>
+                {%- endif -%}
+                <h3 class="rps__name"><a href="{{ rp.url }}" draggable="false">{{ rp.title | escape }}</a></h3>
+                {%- if section.settings.show_price -%}
+                  <div class="rps__price">
+                    {%- if on_sale -%}
+                      <span class="rps__price-now rps__price-now--sale">{% if rp.price_varies %}From {% endif %}{{ rp.price | money }}</span>
+                      <s class="rps__price-was">{{ rp.compare_at_price | money }}</s>
+                    {%- else -%}
+                      <span class="rps__price-now">{% if rp.price_varies %}From {% endif %}{{ rp.price | money }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.show_progress -%}
+          <div class="rps__progress" aria-hidden="true"><div class="rps__bar" data-rps-bar></div></div>
+        {%- endif -%}
+
+      {%- elsif needs_fetch -%}
+        <ul class="rps__track rps__track--skeleton" role="presentation" aria-hidden="true">
+          {%- for i in (1..6) -%}
+            <li class="rps__item">
+              <div class="rps__media rps__sk"></div>
+              <div class="rps__sk rps__sk-line"></div>
+              <div class="rps__sk rps__sk-line rps__sk-line--short"></div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <p class="rps__note">Related products slider: open this on a product page, or choose a source product or fallback collection in the section settings.</p>
+      {%- endif -%}
+    </related-products-slider>
+  </div>
+</section>
+{%- endif -%}
+
+<script>
+  (function () {
+    if (customElements.get('related-products-slider')) return;
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var shopifyRoot = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
+
+    class RelatedProductsSlider extends HTMLElement {
+      connectedCallback() {
+        if (this._ready) return;
+        this._ready = true;
+        this._pid = this.dataset.productId || '';
+        this._limit = parseInt(this.dataset.limit, 10) || 0;
+
+        if (this.dataset.url && !this.querySelector('.rps__track:not(.rps__track--skeleton)')) {
+          this.lazyLoad();
+        } else {
+          this.init();
+        }
+      }
+
+      disconnectedCallback() {
+        this.teardown();
+        this._ready = false;
+      }
+
+      /* ---------- Loading related products ---------- */
+      lazyLoad() {
+        var self = this;
+        if (!('IntersectionObserver' in window)) { this.fetchProducts(); return; }
+        this._io = new IntersectionObserver(function (entries, obs) {
+          if (entries[0].isIntersecting) { obs.disconnect(); self.fetchProducts(); }
+        }, { rootMargin: '400px 0px' });
+        this._io.observe(this);
+      }
+
+      fetchProducts() {
+        var self = this;
+        fetch(this.dataset.url)
+          .then(function (res) { if (!res.ok) throw new Error('bad response'); return res.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.querySelector('related-products-slider');
+            if (fresh && fresh.querySelector('.rps__track:not(.rps__track--skeleton)')) {
+              self.innerHTML = fresh.innerHTML;
+              self.classList.remove('rps--loading');
+              self.dedupe();
+              self.init();
+            } else {
+              self.showEmpty();
+            }
+          })
+          .catch(function () { self.showEmpty(); });
+      }
+
+      /* Removes the current product (can appear in fallback collections) and trims to the limit. */
+      dedupe() {
+        if (this._pid) {
+          var self = this.querySelector('.rps__item[data-product-id="' + this._pid + '"]');
+          if (self) self.remove();
+        }
+        if (this._limit) {
+          var items = this.querySelectorAll('.rps__track .rps__item');
+          for (var i = this._limit; i < items.length; i++) items[i].remove();
+        }
+      }
+
+      showEmpty() {
+        var section = this.closest('.rps-section');
+        if (window.Shopify && Shopify.designMode) {
+          var track = this.querySelector('.rps__track');
+          if (track) {
+            track.outerHTML = '<p class="rps__note">No related products found yet. Add a fallback collection in the section settings.</p>';
+          }
+          this.classList.remove('rps--loading');
+        } else if (section) {
+          section.hidden = true;
+        }
+      }
+
+      /* ---------- Slider behaviour ---------- */
+      init() {
+        this.track = this.querySelector('.rps__track');
+        if (!this.track || this.track.classList.contains('rps__track--skeleton')) return;
+
+        this.prevBtn = this.querySelector('[data-rps-prev]');
+        this.nextBtn = this.querySelector('[data-rps-next]');
+        this.bar = this.querySelector('[data-rps-bar]');
+        this._handlers = [];
+
+        var self = this;
+        var t = this.track;
+
+        this._onScroll = function () {
+          if (self._raf) return;
+          self._raf = requestAnimationFrame(function () { self._raf = null; self.update(); });
+        };
+        this.on(t, 'scroll', this._onScroll, { passive: true });
+
+        if ('ResizeObserver' in window) {
+          this._ro = new ResizeObserver(this._onScroll);
+          this._ro.observe(t);
+        } else {
+          this.on(window, 'resize', this._onScroll);
+        }
+
+        if (this.prevBtn) this.on(this.prevBtn, 'click', function () { self.page(-1); });
+        if (this.nextBtn) this.on(this.nextBtn, 'click', function () { self.page(1); });
+
+        this.on(t, 'keydown', function (e) {
+          if (e.key === 'ArrowRight') { e.preventDefault(); self.page(1); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); self.page(-1); }
+        });
+
+        this.initDrag();
+        this.on(this, 'click', function (e) { self.handleAdd(e); });
+        this.initAutoplay();
+        this.update();
+      }
+
+      on(target, type, fn, opts) {
+        target.addEventListener(type, fn, opts);
+        this._handlers.push([target, type, fn, opts]);
+      }
+
+      teardown() {
+        if (this._io) this._io.disconnect();
+        if (this._ro) this._ro.disconnect();
+        if (this._timer) clearInterval(this._timer);
+        if (this._raf) cancelAnimationFrame(this._raf);
+        (this._handlers || []).forEach(function (h) { h[0].removeEventListener(h[1], h[2], h[3]); });
+        this._handlers = [];
+      }
+
+      page(dir) {
+        var t = this.track;
+        var first = t.querySelector('.rps__item');
+        if (!first) return;
+        var gap = parseFloat(getComputedStyle(t).columnGap) || 0;
+        var step = first.getBoundingClientRect().width + gap;
+        var visible = Math.max(1, Math.floor((t.clientWidth + gap) / step + 0.05));
+        t.scrollBy({ left: dir * step * visible, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+
+      update() {
+        var t = this.track;
+        var max = t.scrollWidth - t.clientWidth;
+        var x = t.scrollLeft;
+        this.classList.toggle('is-static', max <= 2);
+        if (this.prevBtn) this.prevBtn.disabled = x <= 2;
+        if (this.nextBtn) this.nextBtn.disabled = x >= max - 2;
+        if (this.bar) {
+          var ratio = Math.min(1, t.clientWidth / t.scrollWidth);
+          var progress = max > 0 ? x / max : 0;
+          this.bar.style.width = (ratio * 100) + '%';
+          this.bar.style.transform = 'translateX(' + (progress * (1 / ratio - 1) * 100) + '%)';
+        }
+      }
+
+      /* Mouse drag-to-scroll (touch already swipes natively) */
+      initDrag() {
+        var self = this, t = this.track;
+        var down = false, moved = false, startX = 0, startLeft = 0;
+        this._dragged = false;
+
+        this.on(t, 'pointerdown', function (e) {
+          if (e.pointerType !== 'mouse' || e.button !== 0) return;
+          down = true; moved = false; startX = e.clientX; startLeft = t.scrollLeft;
+        });
+        this.on(window, 'pointermove', function (e) {
+          if (!down) return;
+          var dx = e.clientX - startX;
+          if (!moved && Math.abs(dx) > 6) { moved = true; self._dragged = true; t.classList.add('is-dragging'); }
+          if (moved) t.scrollLeft = startLeft - dx;
+        });
+        this.on(window, 'pointerup', function () {
+          if (!down) return;
+          down = false;
+          t.classList.remove('is-dragging');
+          if (moved) setTimeout(function () { self._dragged = false; }, 0);
+        });
+        this.on(t, 'click', function (e) {
+          if (self._dragged) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
+        this.on(t, 'dragstart', function (e) { e.preventDefault(); });
+      }
+
+      initAutoplay() {
+        if (!this.dataset.autoplay || reduceMotion) return;
+        var self = this;
+        var delay = parseInt(this.dataset.delay, 10) || 5000;
+        var paused = false;
+        ['mouseenter', 'focusin', 'touchstart'].forEach(function (ev) { self.on(self, ev, function () { paused = true; }, { passive: true }); });
+        ['mouseleave', 'focusout', 'touchend'].forEach(function (ev) { self.on(self, ev, function () { paused = false; }, { passive: true }); });
+        this._timer = setInterval(function () {
+          if (paused || document.hidden) return;
+          var t = self.track;
+          var max = t.scrollWidth - t.clientWidth;
+          if (max <= 2) return;
+          if (t.scrollLeft >= max - 2) t.scrollTo({ left: 0, behavior: 'smooth' });
+          else self.page(1);
+        }, delay);
+      }
+
+      /* ---------- Quick add to cart ---------- */
+      handleAdd(e) {
+        var btn = e.target.closest('[data-rps-add]');
+        if (!btn || btn.disabled) return;
+        e.preventDefault();
+
+        var self = this;
+        var label = btn.querySelector('.rps__add-label');
+        var original = label.textContent;
+        var reset = function () {
+          btn.disabled = false;
+          btn.classList.remove('is-added', 'is-error');
+          label.textContent = original;
+        };
+
+        btn.disabled = true;
+        label.textContent = 'Adding…';
+
+        fetch(shopifyRoot + 'cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ items: [{ id: Number(btn.dataset.variantId), quantity: 1 }] })
+        })
+          .then(function (res) {
+            return res.json().then(function (data) {
+              if (!res.ok) throw new Error(data.description || data.message || 'Could not add');
+              return data;
+            });
+          })
+          .then(function () {
+            label.textContent = self.dataset.addedLabel || 'Added';
+            btn.classList.add('is-added');
+            return fetch(shopifyRoot + 'cart.js', { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); });
+          })
+          .then(function (cart) {
+            self.refreshCartUI(cart);
+            if (self.dataset.after === 'cart') window.location.href = shopifyRoot + 'cart';
+            else setTimeout(reset, 2200);
+          })
+          .catch(function (err) {
+            var msg = (err && err.message) || '';
+            label.textContent = msg && msg.length < 30 ? msg : 'Try again';
+            btn.classList.add('is-error');
+            setTimeout(reset, 2600);
+          });
+      }
+
+      /* Best-effort cart refresh: updates common count bubbles and fires events themes can listen to. */
+      refreshCartUI(cart) {
+        document.querySelectorAll('.cart-count-bubble span[aria-hidden="true"], [data-cart-count], .cart-count, #CartCount').forEach(function (el) {
+          el.textContent = cart.item_count;
+        });
+        ['cart:updated', 'cart:refresh', 'cart:change'].forEach(function (name) {
+          document.documentElement.dispatchEvent(new CustomEvent(name, { bubbles: true, detail: { cart: cart } }));
+        });
+      }
+    }
+
+    customElements.define('related-products-slider', RelatedProductsSlider);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Related products slider",
+  "tag": "section",
+  "class": "rps-shopify-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Automatically shows products related to the product being viewed. Best used on the product page template."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "intent",
+      "label": "Recommendation type",
+      "default": "related",
+      "options": [
+        { "value": "related", "label": "Related (similar products)" },
+        { "value": "complementary", "label": "Complementary (goes well with)" }
+      ],
+      "info": "Complementary needs the Shopify Search & Discovery app to be set up."
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "label": "Maximum products",
+      "default": 8
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Fallback collection",
+      "info": "Shown when Shopify has no recommendations for a product yet (common for new stores or new products)."
+    },
+    {
+      "type": "product",
+      "id": "source_product",
+      "label": "Source product (non-product pages only)",
+      "info": "Only used when this section is placed on a page that is not a product page."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show \"View all\" link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "\"View all\" label",
+      "default": "View all"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "page",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Products visible - desktop",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "slides_tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Products visible - tablet",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "min": 1,
+      "max": 2.5,
+      "step": 0.5,
+      "label": "Products visible - mobile",
+      "default": 1.5,
+      "info": "A half value (1.5) shows part of the next product so people know they can swipe."
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between products",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between products - mobile",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Image shape",
+      "default": "portrait",
+      "options": [
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "tall", "label": "Tall (2:3)" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "landscape", "label": "Landscape (4:3)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image roundness",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_custom",
+      "label": "Use custom font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font family",
+      "default": "assistant_n4",
+      "visible_if": "{{ section.settings.heading_custom }}"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 18,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size - mobile",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Show sale and sold out badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_second_image",
+      "label": "Show second image on hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick add button",
+      "default": true,
+      "info": "Single-variant products are added in one tap. Others link to the product page."
+    },
+    {
+      "type": "text",
+      "id": "add_label",
+      "label": "Quick add label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "select",
+      "id": "after_add",
+      "label": "After adding to cart",
+      "default": "stay",
+      "options": [
+        { "value": "stay", "label": "Stay on the page" },
+        { "value": "cart", "label": "Go to the cart page" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button roundness",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Slider controls"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Show arrows on mobile",
+      "default": false,
+      "info": "Mobile visitors can always swipe."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": "Show progress bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false,
+      "info": "Pauses on hover, focus and touch. Disabled for visitors who prefer reduced motion."
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay delay",
+      "default": 5,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading and product names",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#3A3A3A"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "sale_color",
+      "label": "Sale price and badge",
+      "default": "#C0392B"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Quick add background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Quick add text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Quick add hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow icon",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related products slider"
+    }
+  ]
+}
+{% endschema %}
