@@ -1,0 +1,199 @@
+{% comment %}
+  TSS Premium Product Gallery — Shopify theme block
+  Add this block only to a product section that supports theme blocks.
+  Check your theme's block restrictions and variant-change events before replacing its current gallery.
+{% endcomment %}
+{% liquid
+  assign gallery_product = closest.product | default: product
+  assign gallery_media_count = gallery_product.media.size
+  assign gallery_initial_media = gallery_product.selected_or_first_available_variant.featured_media
+  if gallery_initial_media == blank
+    assign gallery_initial_media = gallery_product.featured_media | default: gallery_product.media.first
+  endif
+%}
+
+<div {{ block.shopify_attributes }} id="TSSGallery-{{ block.id }}" class="tss-gallery"
+  style="--tss-bg:{{ block.settings.background }};--tss-gap:{{ block.settings.spacing }}px;--tss-radius:{{ block.settings.radius }}px;--tss-thumb:{{ block.settings.thumb_width }}px;--tss-ratio:{% case block.settings.ratio %}{% when 'square' %}1 / 1{% when 'landscape' %}5 / 4{% else %}4 / 5{% endcase %};">
+  {% if gallery_media_count > 0 %}
+    <div class="tss-gallery__layout{% unless block.settings.show_thumbnails %} tss-gallery__layout--no-thumbs{% endunless %}{% if block.settings.thumb_position == 'right' %} tss-gallery__layout--right{% endif %}">
+      {% if block.settings.show_thumbnails %}
+        <div class="tss-gallery__thumbs" role="group" aria-label="Product media thumbnails">
+          {% for media in gallery_product.media %}
+            <button type="button" class="tss-gallery__thumb{% if media.id == gallery_initial_media.id %} is-active{% endif %}"
+              data-tss-thumb data-media-id="{{ media.id }}" data-index="{{ forloop.index0 }}"
+              aria-label="View media {{ forloop.index }} of {{ gallery_media_count }}"
+              aria-pressed="{% if media.id == gallery_initial_media.id %}true{% else %}false{% endif %}">
+              {% if media.preview_image %}
+                {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', widths: '80, 120, 160, 220', sizes: '90px', alt: media.alt }}
+              {% endif %}
+              {% unless media.media_type == 'image' %}<span class="tss-gallery__badge">{% if media.media_type == 'model' %}3D{% else %}▶{% endif %}</span>{% endunless %}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <div class="tss-gallery__main" data-tss-main tabindex="0" aria-label="Product media viewer. Use left and right arrow keys to navigate.">
+        {% for media in gallery_product.media %}
+          <div class="tss-gallery__slide{% if media.id == gallery_initial_media.id %} is-active{% endif %}"
+            data-tss-slide data-media-id="{{ media.id }}" data-index="{{ forloop.index0 }}" data-media-type="{{ media.media_type }}"
+            {% unless media.id == gallery_initial_media.id %}hidden{% endunless %}>
+            {% case media.media_type %}
+              {% when 'image' %}
+                {{ media | image_url: width: 2000 | image_tag: loading: 'lazy', widths: '360, 540, 750, 990, 1200, 1500, 1800, 2000', sizes: '(min-width: 990px) 65vw, 100vw', class: 'tss-gallery__image', alt: media.alt }}
+              {% when 'video' %}
+                {{ media | video_tag: controls: true, image_size: '1200x', preload: 'none', class: 'tss-gallery__media' }}
+              {% when 'external_video' %}
+                {{ media | external_video_tag: class: 'tss-gallery__media' }}
+              {% when 'model' %}
+                {{ media | model_viewer_tag: image_size: '1200x', reveal: 'interaction', toggleable: true, class: 'tss-gallery__media' }}
+            {% endcase %}
+          </div>
+        {% endfor %}
+        {% if block.settings.enable_zoom %}
+          <button class="tss-gallery__zoom" type="button" data-tss-zoom aria-label="Zoom current product image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5M10.8 7.5v6.6M7.5 10.8h6.6"/></svg>
+          </button>
+        {% endif %}
+        {% if block.settings.show_arrows and gallery_media_count > 1 %}
+          <button class="tss-gallery__arrow tss-gallery__arrow--prev" type="button" data-tss-prev aria-label="Previous product media">‹</button>
+          <button class="tss-gallery__arrow tss-gallery__arrow--next" type="button" data-tss-next aria-label="Next product media">›</button>
+        {% endif %}
+        {% if block.settings.show_counter %}<div class="tss-gallery__counter" aria-live="polite"><span data-tss-current>{{ gallery_initial_media.position | default: 1 }}</span> / {{ gallery_media_count }}</div>{% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="tss-gallery__empty">{{ 'product-1' | placeholder_svg_tag }}<p>No product media available</p></div>
+  {% endif %}
+  {% if block.settings.enable_zoom and gallery_media_count > 0 %}
+    <dialog class="tss-gallery__dialog" data-tss-dialog aria-label="Product image zoom">
+      <button type="button" class="tss-gallery__close" data-tss-close aria-label="Close zoom">×</button>
+      <img data-tss-zoom-image alt="" width="1600" height="1600">
+    </dialog>
+  {% endif %}
+</div>
+
+<style>
+#TSSGallery-{{ block.id }}{width:100%;background:var(--tss-bg);color:#292723;font-family:inherit}
+#TSSGallery-{{ block.id }} *{box-sizing:border-box}
+#TSSGallery-{{ block.id }} button{font:inherit;cursor:pointer}
+#TSSGallery-{{ block.id }} button:focus-visible,#TSSGallery-{{ block.id }} [data-tss-main]:focus-visible{outline:2px solid #39342f;outline-offset:3px}
+#TSSGallery-{{ block.id }} .tss-gallery__layout{display:grid;grid-template-columns:var(--tss-thumb) minmax(0,1fr);gap:var(--tss-gap);align-items:start}
+#TSSGallery-{{ block.id }} .tss-gallery__layout--right{grid-template-columns:minmax(0,1fr) var(--tss-thumb)}
+#TSSGallery-{{ block.id }} .tss-gallery__layout--right .tss-gallery__thumbs{grid-column:2;grid-row:1}
+#TSSGallery-{{ block.id }} .tss-gallery__layout--right .tss-gallery__main{grid-column:1;grid-row:1}
+#TSSGallery-{{ block.id }} .tss-gallery__layout--no-thumbs{grid-template-columns:minmax(0,1fr)}
+#TSSGallery-{{ block.id }} .tss-gallery__thumbs{display:flex;flex-direction:column;gap:10px;max-height:720px;overflow:auto;padding:3px;scrollbar-width:thin}
+#TSSGallery-{{ block.id }} .tss-gallery__thumb{position:relative;display:block;flex:0 0 auto;width:100%;aspect-ratio:1;padding:0;overflow:hidden;border:1px solid #dedbd5;border-radius:calc(var(--tss-radius)*.55);background:#f5f3f0;opacity:.68;transition:opacity .2s,border-color .2s}
+#TSSGallery-{{ block.id }} .tss-gallery__thumb.is-active{opacity:1;border-color:#39342f;box-shadow:0 0 0 1px #39342f}
+#TSSGallery-{{ block.id }} .tss-gallery__thumb img{display:block;width:100%;height:100%;object-fit:cover}
+#TSSGallery-{{ block.id }} .tss-gallery__badge{position:absolute;right:5px;bottom:5px;background:#fff;border-radius:4px;padding:2px 5px;font-size:10px}
+#TSSGallery-{{ block.id }} .tss-gallery__main{position:relative;min-width:0;aspect-ratio:var(--tss-ratio);overflow:hidden;border-radius:var(--tss-radius);background:#f7f6f3}
+#TSSGallery-{{ block.id }} .tss-gallery__slide{width:100%;height:100%}
+#TSSGallery-{{ block.id }} .tss-gallery__slide[hidden]{display:none!important}
+#TSSGallery-{{ block.id }} .tss-gallery__image,#TSSGallery-{{ block.id }} .tss-gallery__media{display:block;width:100%;height:100%;object-fit:contain;border:0}
+#TSSGallery-{{ block.id }} .tss-gallery__zoom,#TSSGallery-{{ block.id }} .tss-gallery__arrow{position:absolute;z-index:2;display:grid;place-items:center;width:42px;height:42px;border:1px solid #e8e4de;border-radius:50%;background:#fffffff2;color:#292723;box-shadow:0 2px 12px #0000000c}
+#TSSGallery-{{ block.id }} .tss-gallery__zoom{top:16px;right:16px}
+#TSSGallery-{{ block.id }} .tss-gallery__zoom svg{width:21px;height:21px}
+#TSSGallery-{{ block.id }} .tss-gallery__arrow{top:50%;transform:translateY(-50%);font-size:31px;line-height:1}
+#TSSGallery-{{ block.id }} .tss-gallery__arrow--prev{left:14px}
+#TSSGallery-{{ block.id }} .tss-gallery__arrow--next{right:14px}
+#TSSGallery-{{ block.id }} .tss-gallery__counter{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:#ffffffed;border-radius:30px;padding:7px 14px;font-size:12px;letter-spacing:.08em}
+#TSSGallery-{{ block.id }} .tss-gallery__empty{min-height:250px;text-align:center;background:#f7f6f3;padding:30px}
+#TSSGallery-{{ block.id }} .tss-gallery__empty svg{max-width:200px}
+#TSSGallery-{{ block.id }} .tss-gallery__dialog{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:45px 20px 20px;border:0;background:#f9f8f6}
+#TSSGallery-{{ block.id }} .tss-gallery__dialog::backdrop{background:#000b}
+#TSSGallery-{{ block.id }} .tss-gallery__dialog img{display:block;width:100%;height:100%;object-fit:contain}
+#TSSGallery-{{ block.id }} .tss-gallery__close{position:fixed;top:16px;right:22px;z-index:3;width:42px;height:42px;border:1px solid #ddd;border-radius:50%;background:white;font-size:30px}
+@media(max-width:749px){
+#TSSGallery-{{ block.id }} .tss-gallery__layout,#TSSGallery-{{ block.id }} .tss-gallery__layout--right{display:flex;flex-direction:column;gap:12px}
+#TSSGallery-{{ block.id }} .tss-gallery__main{width:100%;order:0}
+#TSSGallery-{{ block.id }} .tss-gallery__thumbs{width:100%;max-height:none;flex-direction:row;overflow-x:auto;order:1;gap:9px;scroll-snap-type:x proximity}
+#TSSGallery-{{ block.id }} .tss-gallery__thumb{width:68px;flex:0 0 68px;scroll-snap-align:start}
+#TSSGallery-{{ block.id }} .tss-gallery__zoom,#TSSGallery-{{ block.id }} .tss-gallery__arrow{width:36px;height:36px}
+#TSSGallery-{{ block.id }} .tss-gallery__zoom{top:10px;right:10px}
+#TSSGallery-{{ block.id }} .tss-gallery__arrow--prev{left:8px}#TSSGallery-{{ block.id }} .tss-gallery__arrow--next{right:8px}
+}
+@media(prefers-reduced-motion:reduce){#TSSGallery-{{ block.id }} *{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById('TSSGallery-{{ block.id }}');
+  if (!root || root.dataset.tssInitialized === 'true') return;
+  root.dataset.tssInitialized = 'true';
+  const slides = [...root.querySelectorAll('[data-tss-slide]')];
+  const thumbs = [...root.querySelectorAll('[data-tss-thumb]')];
+  const main = root.querySelector('[data-tss-main]');
+  const counter = root.querySelector('[data-tss-current]');
+  const dialog = root.querySelector('[data-tss-dialog]');
+  const zoomImage = root.querySelector('[data-tss-zoom-image]');
+  let index = Math.max(0, slides.findIndex(s => s.classList.contains('is-active')));
+  let touchStart = null;
+  function show(next) {
+    if (!slides.length) return;
+    index = (next + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      slide.hidden = i !== index;
+      slide.classList.toggle('is-active', i === index);
+      if (i !== index) slide.querySelectorAll('video').forEach(v => v.pause());
+    });
+    thumbs.forEach((thumb, i) => {
+      const active = i === index;
+      thumb.classList.toggle('is-active', active);
+      thumb.setAttribute('aria-pressed', String(active));
+    });
+    if (counter) counter.textContent = String(index + 1);
+    if (thumbs[index]) thumbs[index].scrollIntoView({block:'nearest',inline:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+    const isImage = slides[index].dataset.mediaType === 'image';
+    const zoomButton = root.querySelector('[data-tss-zoom]');
+    if (zoomButton) { zoomButton.hidden = !isImage; zoomButton.disabled = !isImage; }
+  }
+  root.addEventListener('click', event => {
+    const thumb = event.target.closest('[data-tss-thumb]');
+    if (thumb) { show(Number(thumb.dataset.index)); return; }
+    if (event.target.closest('[data-tss-prev]')) { show(index - 1); return; }
+    if (event.target.closest('[data-tss-next]')) { show(index + 1); return; }
+    if (event.target.closest('[data-tss-close]')) { dialog.close(); return; }
+    if (event.target.closest('[data-tss-zoom]') && dialog && zoomImage) {
+      const image = slides[index].querySelector('img');
+      if (!image) return;
+      zoomImage.src = image.currentSrc || image.src;
+      zoomImage.alt = image.alt || 'Product image';
+      dialog.showModal();
+    }
+  });
+  main?.addEventListener('keydown', event => {
+    if (event.target !== main) return;
+    if (event.key === 'ArrowLeft') { event.preventDefault(); show(index - 1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); show(index + 1); }
+  });
+  main?.addEventListener('pointerdown', event => { if (event.pointerType === 'touch') touchStart = event.clientX; });
+  main?.addEventListener('pointerup', event => {
+    if (touchStart === null || event.pointerType !== 'touch') return;
+    const delta = event.clientX - touchStart; touchStart = null;
+    if (Math.abs(delta) > 55 && !event.target.closest('video,iframe,model-viewer')) show(index + (delta < 0 ? 1 : -1));
+  });
+  dialog?.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+  // Variant media synchronization must be connected to your theme's actual variant event.
+  // Shopify themes do not share one universal variant-change event convention.
+  show(index);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "TSS Premium gallery",
+  "settings": [
+    {"type":"checkbox","id":"show_thumbnails","label":"Show thumbnails","default":true},
+    {"type":"select","id":"thumb_position","label":"Desktop thumbnail position","options":[{"value":"left","label":"Left"},{"value":"right","label":"Right"}],"default":"left"},
+    {"type":"range","id":"thumb_width","label":"Desktop thumbnail width","min":56,"max":140,"step":4,"unit":"px","default":88},
+    {"type":"select","id":"ratio","label":"Main media aspect ratio","options":[{"value":"square","label":"Square"},{"value":"portrait","label":"Portrait"},{"value":"landscape","label":"Landscape"}],"default":"portrait"},
+    {"type":"range","id":"radius","label":"Corner radius","min":0,"max":32,"step":2,"unit":"px","default":12},
+    {"type":"range","id":"spacing","label":"Gallery spacing","min":4,"max":32,"step":2,"unit":"px","default":16},
+    {"type":"checkbox","id":"show_arrows","label":"Show navigation arrows","default":true},
+    {"type":"checkbox","id":"enable_zoom","label":"Enable image zoom","default":true},
+    {"type":"checkbox","id":"show_counter","label":"Show media counter","default":true},
+    {"type":"color","id":"background","label":"Background color","default":"#ffffff"}
+  ],
+  "presets":[{"name":"TSS Premium gallery"}]
+}
+{% endschema %}
