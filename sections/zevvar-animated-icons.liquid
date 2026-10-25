@@ -1,0 +1,199 @@
+<section
+  id="zevvar-icons-{{ section.id }}"
+  class="zevvar-icons"
+>
+  <div class="zevvar-icons__grid">
+    {% for block in section.blocks %}
+      {% if block.settings.icon_url != blank %}
+        <div
+          class="zevvar-icons__item"
+          {{ block.shopify_attributes }}
+        >
+          <img
+            class="zevvar-icons__image"
+            src="{{ block.settings.icon_url | escape }}"
+            alt="{{ block.settings.label | escape }}"
+            width="80"
+            height="80"
+            loading="lazy"
+          >
+
+          <span class="zevvar-icons__label">
+            {{ block.settings.label | escape }}
+          </span>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  #zevvar-icons-{{ section.id }} {
+    background: {{ section.settings.background }};
+    padding: {{ section.settings.padding }}px 20px;
+  }
+
+  #zevvar-icons-{{ section.id }} .zevvar-icons__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  #zevvar-icons-{{ section.id }} .zevvar-icons__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 0;
+  }
+
+  #zevvar-icons-{{ section.id }} .zevvar-icons__image {
+    display: block;
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+    max-width: 100%;
+    object-fit: contain;
+    margin-bottom: 8px;
+  }
+
+  #zevvar-icons-{{ section.id }} .zevvar-icons__label {
+    color: {{ section.settings.label_color }};
+    font-size: {{ section.settings.label_size }}px;
+    line-height: 1.25;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+
+  @media screen and (max-width: 749px) {
+    #zevvar-icons-{{ section.id }} {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    #zevvar-icons-{{ section.id }} .zevvar-icons__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 16px;
+    }
+
+    #zevvar-icons-{{ section.id }} .zevvar-icons__image {
+      width: min({{ section.settings.icon_size }}px, 64px);
+      height: min({{ section.settings.icon_size }}px, 64px);
+    }
+
+    #zevvar-icons-{{ section.id }} .zevvar-icons__label {
+      font-size: 12px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "ZEVVAR Animated Icons",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#F5F3EF"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#829015"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 35,
+      "max": 120,
+      "step": 5,
+      "default": 65
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Section padding",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 25
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon",
+      "name": "Animated icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Made to Last"
+        },
+        {
+          "type": "url",
+          "id": "icon_url",
+          "label": "Direct GIF or image URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZEVVAR Animated Icons",
+      "blocks": [
+        {
+          "type": "icon",
+          "settings": {
+            "label": "Non Allergic"
+          }
+        },
+        {
+          "type": "icon",
+          "settings": {
+            "label": "Premium Metals & Stones",
+            "icon_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Diamond_animation.gif"
+          }
+        },
+        {
+          "type": "icon",
+          "settings": {
+            "label": "Made to Last"
+          }
+        },
+        {
+          "type": "icon",
+          "settings": {
+            "label": "Light Weight"
+          }
+        },
+        {
+          "type": "icon",
+          "settings": {
+            "label": "COD Available"
+          }
+        },
+        {
+          "type": "icon",
+          "settings": {
+            "label": "Handmade by Experts"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

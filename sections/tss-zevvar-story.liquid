@@ -1,0 +1,39 @@
+<section class="zv-story" id="zv-story-{{ section.id }}">
+  <div class="zv-tabs" role="tablist" aria-label="Product information">
+    {% for block in section.blocks %}{% if block.type == 'tab' %}<button type="button" role="tab" class="zv-tab {% if forloop.first %}is-active{% endif %}" id="zv-tab-{{ block.id }}" aria-controls="zv-panel-{{ block.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-zv-tab>{{ block.settings.heading | escape }}</button>{% endif %}{% endfor %}
+  </div>
+  {% assign first_tab = true %}
+  {% for block in section.blocks %}
+    {% if block.type == 'tab' %}
+      <div class="zv-tab-panel" id="zv-panel-{{ block.id }}" role="tabpanel" aria-labelledby="zv-tab-{{ block.id }}" {% unless first_tab %}hidden{% endunless %}>
+        {% if first_tab %}
+          <div class="zv-story-grid">
+            <div class="zv-story-copy"><h2>{{ section.settings.heading | escape | newline_to_br }}</h2><div class="zv-story-body">{% if block.settings.content != blank %}{{ block.settings.content }}{% else %}{{ product.description }}{% endif %}</div><p class="zv-handwriting">{{ section.settings.handwritten | escape | newline_to_br }}</p></div>
+            <div class="zv-story-model">{% if section.settings.model_image != blank %}{{ section.settings.model_image | image_url: width: 900 | image_tag: loading: 'lazy' }}{% else %}{{ 'lifestyle-1' | placeholder_svg_tag }}{% endif %}</div>
+            <div class="zv-story-features">{% for feature in section.blocks %}{% if feature.type == 'feature' %}<div class="zv-feature" {{ feature.shopify_attributes }}><span class="zv-feature-icon">{{ feature.settings.icon | escape }}</span><div><strong>{{ feature.settings.title | escape }}</strong><p>{{ feature.settings.text | escape }}</p></div></div>{% endif %}{% endfor %}</div>
+            <div class="zv-story-packaging">{% if section.settings.packaging_image != blank %}{{ section.settings.packaging_image | image_url: width: 900 | image_tag: loading: 'lazy' }}{% else %}{{ 'product-2' | placeholder_svg_tag }}{% endif %}</div>
+          </div>
+        {% else %}
+          <div class="zv-tab-richtext">{{ block.settings.content }}</div>
+        {% endif %}
+      </div>
+      {% assign first_tab = false %}
+    {% endif %}
+  {% endfor %}
+</section>
+{% schema %}
+{
+  "name":"TSS ZEVVAR story & tabs",
+  "settings":[
+    {"type":"text","id":"heading","label":"Story heading","default":"A Masterpiece of Tradition and Grace"},
+    {"type":"textarea","id":"handwritten","label":"Handwritten quote","default":"For the woman who\nwears her heritage."},
+    {"type":"image_picker","id":"model_image","label":"Model photograph"},
+    {"type":"image_picker","id":"packaging_image","label":"Packaging photograph"}
+  ],
+  "blocks":[
+    {"type":"tab","name":"Information tab","limit":4,"settings":[{"type":"text","id":"heading","label":"Tab heading","default":"DESCRIPTION"},{"type":"richtext","id":"content","label":"Content (first tab uses product description if empty)"}]},
+    {"type":"feature","name":"Craftsmanship feature","limit":4,"settings":[{"type":"text","id":"icon","label":"Icon character","default":"◇"},{"type":"text","id":"title","label":"Heading","default":"PREMIUM KUNDAN STONES"},{"type":"textarea","id":"text","label":"Description","default":"Brilliant, hand-set stones for a lasting sparkle."}]}
+  ],
+  "presets":[{"name":"TSS ZEVVAR story & tabs","blocks":[{"type":"tab","settings":{"heading":"DESCRIPTION"}},{"type":"tab","settings":{"heading":"DETAILS"}},{"type":"tab","settings":{"heading":"SHIPPING & RETURNS"}},{"type":"tab","settings":{"heading":"CARE"}},{"type":"feature","settings":{"icon":"◇","title":"PREMIUM KUNDAN STONES","text":"Brilliant, hand-set stones for a lasting sparkle."}},{"type":"feature","settings":{"icon":"♧","title":"ARTISAN CRAFTSMANSHIP","text":"Meticulously handcrafted by skilled artisans."}},{"type":"feature","settings":{"icon":"▣","title":"LUXURY PACKAGING","text":"Comes in our signature ZEVVAR box."}},{"type":"feature","settings":{"icon":"❀","title":"TIMELESS ELEGANCE","text":"Designed to be loved, for generations."}}]}]
+}
+{% endschema %}

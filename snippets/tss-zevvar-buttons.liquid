@@ -1,0 +1,122 @@
+
+{% liquid
+  assign zv_product = product
+  assign zv_variant = zv_product.selected_or_first_available_variant
+  assign zv_uid = section.id | default: 'zevvar'
+%}
+
+<div
+  class="tss-luxury-actions"
+  data-tss-luxury
+  data-product-id="{{ zv_product.id }}"
+  data-product-url="{{ zv_product.url }}"
+>
+  {% form 'product', zv_product, class: 'tss-luxury-form' %}
+
+    <input
+      type="hidden"
+      name="id"
+      value="{{ zv_variant.id }}"
+      data-tss-variant
+    >
+
+    <input
+      type="hidden"
+      name="quantity"
+      value="1"
+      data-tss-quantity
+    >
+
+    <div class="tss-luxury-grid">
+
+      <!-- ADD TO BAG -->
+      <button
+        type="submit"
+        class="tss-luxury-btn tss-add-bag"
+        data-tss-add
+        {% unless zv_variant.available %}disabled{% endunless %}
+      >
+        <svg viewBox="0 0 64 64" fill="none"
+          stroke="currentColor" stroke-width="3"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M15 24h34l4 31H11l4-31Z"/>
+          <path d="M23 26v-8a9 9 0 0 1 18 0v8"/>
+          <circle cx="23" cy="27" r="2"/>
+          <circle cx="41" cy="27" r="2"/>
+        </svg>
+
+        <span data-tss-add-text>
+          {% if zv_variant.available %}
+            ADD TO BAG
+          {% else %}
+            SOLD OUT
+          {% endif %}
+        </span>
+      </button>
+
+      <!-- MIDDLE BUTTONS -->
+      <div class="tss-luxury-middle">
+
+        <button
+          type="button"
+          class="tss-luxury-icon tss-wishlist"
+          data-tss-wishlist
+          aria-label="Add to wishlist"
+          aria-pressed="false"
+        >
+          <svg viewBox="0 0 64 64"
+            fill="currentColor" aria-hidden="true">
+            <path d="M32 55 8 31C-3 18 11 2 25 12l7 7 7-7C53 2 67 18 56 31Z"/>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="tss-luxury-icon tss-share"
+          data-tss-share
+          aria-label="Share product"
+        >
+          <svg viewBox="0 0 64 64" fill="none"
+            stroke="currentColor" stroke-width="4"
+            stroke-linecap="round"
+            aria-hidden="true">
+            <circle cx="13" cy="32" r="7"/>
+            <circle cx="50" cy="12" r="7"/>
+            <circle cx="50" cy="52" r="7"/>
+            <path d="m19 29 24-14M19 35l24 14"/>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- BUY IT NOW -->
+      <button
+        type="button"
+        class="tss-luxury-btn tss-buy-now"
+        data-tss-buy
+        {% unless zv_variant.available %}disabled{% endunless %}
+      >
+        <svg viewBox="0 0 64 64"
+          fill="currentColor" aria-hidden="true">
+          <path d="m5 18 11 10 16-20 16 20 11-10-6 32H11L5 18Zm8 37h38v5H13v-5Z"/>
+          <circle cx="5" cy="15" r="5"/>
+          <circle cx="32" cy="6" r="5"/>
+          <circle cx="59" cy="15" r="5"/>
+        </svg>
+
+        <span>BUY IT NOW</span>
+      </button>
+
+    </div>
+
+    <p class="tss-luxury-status"
+      data-tss-status
+      role="status"
+      aria-live="polite"></p>
+
+  {% endform %}
+</div>
+
+{{ 'tss-zevvar-buttons.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tss-zevvar-buttons.js' | asset_url }}" defer></script>

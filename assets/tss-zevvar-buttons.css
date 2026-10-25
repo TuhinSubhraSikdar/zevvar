@@ -1,0 +1,418 @@
+
+/* ==========================================
+   ZEVVAR LUXURY PRODUCT BUTTONS
+   ========================================== */
+
+.tss-luxury-actions {
+  width: 100%;
+  margin: 20px 0;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.tss-luxury-form {
+  width: 100%;
+}
+
+.tss-luxury-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+  min-height: 142px;
+}
+
+/* BASE BUTTON */
+
+.tss-luxury-btn,
+.tss-luxury-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-style: solid;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
+}
+
+.tss-luxury-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  min-width: 0;
+  padding: 16px 6px;
+
+  border-width: 3px;
+  border-radius: 29px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(14px, 1.55vw, 25px);
+  font-weight: 400;
+  letter-spacing: .025em;
+  line-height: 1.12;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tss-luxury-btn svg {
+  width: clamp(32px, 4.5vw, 53px);
+  height: clamp(32px, 4.5vw, 53px);
+  flex-shrink: 0;
+}
+
+/* PINK ADD TO BAG */
+
+.tss-add-bag {
+  color: #520816;
+  border-color: #f5a0ad;
+
+  background:
+    linear-gradient(
+      155deg,
+      #fff1ef 0%,
+      #ffbdc7 19%,
+      #f8b6c2 69%,
+      #ffdce0 100%
+    );
+
+  box-shadow:
+    inset 0 3px 3px #ffffff,
+    inset 0 -7px 9px #d66c855e,
+    0 8px 13px #71401d45,
+    0 0 0 1px #ffffff44;
+}
+
+/* RUBY BUY NOW */
+
+.tss-buy-now {
+  color: #fff5e9;
+  border-color: #b90052;
+
+  background:
+    linear-gradient(
+      155deg,
+      #ff4a93 0%,
+      #dc0051 18%,
+      #a9003b 68%,
+      #e80065 100%
+    );
+
+  box-shadow:
+    inset 0 3px 4px #ffb0cc,
+    inset 0 -8px 10px #70002d,
+    0 8px 13px #71401d55,
+    0 0 0 1px #ffb6d5;
+}
+
+/* CENTER ICON COLUMN */
+
+.tss-luxury-middle {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  min-width: 0;
+}
+
+.tss-luxury-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 0;
+  padding: 10px;
+
+  border-width: 2px;
+  border-color: #ead0bd;
+  border-radius: 24px;
+
+  color: #ce002f;
+
+  background:
+    linear-gradient(
+      150deg,
+      #ffffff 0%,
+      #fff7ef 42%,
+      #f4e3d8 100%
+    );
+
+  box-shadow:
+    inset 0 3px 3px #ffffff,
+    inset 0 -5px 8px #d2ac8a55,
+    0 5px 10px #71401d3a;
+}
+
+.tss-luxury-icon svg {
+  width: 35px;
+  height: 35px;
+  max-width: 75%;
+  filter: drop-shadow(0 2px 1px #7b142444);
+}
+
+.tss-share {
+  color: #c38b25;
+}
+
+.tss-wishlist[aria-pressed="true"] {
+  color: #f0044b;
+  background: linear-gradient(155deg, #fff0f1, #ffd1dd);
+}
+
+/* GLASS HIGHLIGHT */
+
+.tss-luxury-btn::before,
+.tss-luxury-icon::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+
+  inset: 5px 8px auto;
+  height: 25%;
+
+  border-top: 2px solid #ffffffc9;
+  border-radius: 100%;
+  filter: blur(1px);
+}
+
+/* SHINE ANIMATION */
+
+.tss-luxury-btn::after {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -85%;
+  width: 45%;
+  height: 260%;
+
+  transform: rotate(25deg) translateX(0);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ffffff75,
+    transparent
+  );
+
+  pointer-events: none;
+  transition: transform .65s ease;
+}
+
+.tss-luxury-btn:hover::after {
+  transform: rotate(25deg) translateX(750%);
+}
+
+/* HOVER */
+
+.tss-luxury-btn:hover:not(:disabled),
+.tss-luxury-icon:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+
+  box-shadow:
+    inset 0 3px 4px #ffffff88,
+    0 12px 17px #71401d59;
+}
+
+/* REALISTIC PRESS */
+
+.tss-luxury-btn:active:not(:disabled),
+.tss-luxury-icon:active {
+  transform: translateY(3px) scale(.99);
+
+  box-shadow:
+    inset 0 5px 10px #50002155,
+    0 2px 4px #71401d44;
+}
+
+.tss-luxury-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.tss-luxury-btn:focus-visible,
+.tss-luxury-icon:focus-visible {
+  outline: 3px solid #7d0636;
+  outline-offset: 3px;
+}
+
+.tss-luxury-status {
+  font-size: 12px;
+  margin: 8px 0;
+  min-height: 18px;
+  color: #6d2539;
+}
+
+/* TABLET */
+
+@media (max-width: 990px) {
+  .tss-luxury-grid {
+    grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
+    min-height: 112px;
+    gap: 7px;
+  }
+
+  .tss-luxury-middle {
+    gap: 7px;
+  }
+
+  .tss-luxury-btn {
+    border-radius: 22px;
+    font-size: clamp(12px, 2vw, 19px);
+  }
+
+  .tss-luxury-icon {
+    border-radius: 18px;
+    padding: 6px;
+  }
+
+  .tss-luxury-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 430px) {
+  .tss-luxury-grid {
+    grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+    min-height: 99px;
+    gap: 6px;
+  }
+
+  .tss-luxury-middle {
+    gap: 6px;
+  }
+
+  .tss-luxury-btn {
+    border-radius: 18px;
+    font-size: clamp(10px, 3vw, 14px);
+    gap: 5px;
+    padding: 10px 3px;
+    border-width: 2px;
+  }
+
+  .tss-luxury-btn svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .tss-luxury-icon {
+    border-radius: 14px;
+  }
+
+  .tss-luxury-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tss-luxury-btn,
+  .tss-luxury-icon,
+  .tss-luxury-btn::after {
+    transition: none;
+  }
+}
+
+/* Match new buttons to existing ZEVVAR section */
+
+.zv-luxury-button-wrapper {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.zv-luxury-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr);
+  gap: 10px;
+  min-height: 142px;
+  align-items: stretch;
+}
+
+/* Override original ZEVVAR button styling */
+
+.zv-product .zv-luxury-actions .zv-btn {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 29px;
+  padding: 16px 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(13px, 1.5vw, 23px);
+  line-height: 1.15;
+  letter-spacing: .025em;
+  text-align: center;
+}
+
+.zv-product .zv-luxury-actions .tss-add-bag {
+  color: #520816;
+  border: 3px solid #f5a0ad;
+  background: linear-gradient(
+    155deg, #fff1ef, #ffbdc7 19%,
+    #f8b6c2 69%, #ffdce0
+  );
+  box-shadow:
+    inset 0 3px 3px #fff,
+    inset 0 -7px 9px #d66c855e,
+    0 8px 13px #71401d45;
+}
+
+.zv-product .zv-luxury-actions .tss-buy-now {
+  color: #fff5e9;
+  border: 3px solid #b90052;
+  background: linear-gradient(
+    155deg, #ff4a93, #dc0051 18%,
+    #a9003b 68%, #e80065
+  );
+  box-shadow:
+    inset 0 3px 4px #ffb0cc,
+    inset 0 -8px 10px #70002d,
+    0 8px 13px #71401d55;
+}
+
+.zv-product .zv-luxury-actions .zv-btn svg {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 749px) {
+  .zv-luxury-actions {
+    grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+    gap: 6px;
+    min-height: 100px;
+  }
+
+  .zv-product .zv-luxury-actions .zv-btn {
+    font-size: clamp(10px, 3vw, 14px);
+    padding: 10px 3px;
+    border-radius: 18px;
+    border-width: 2px;
+  }
+
+  .zv-product .zv-luxury-actions .zv-btn svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .zv-luxury-actions .tss-luxury-middle {
+    gap: 6px;
+  }
+
+  .zv-luxury-actions .tss-luxury-icon {
+    border-radius: 14px;
+    padding: 5px;
+  }
+}

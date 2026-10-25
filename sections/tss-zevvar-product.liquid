@@ -1,0 +1,194 @@
+{{ 'tss-zevvar-product.css' | asset_url | stylesheet_tag }}
+{{ 'tss-zevvar-buttons.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'tss-zevvar-product.js' | asset_url }}" defer="defer"></script>
+{% assign p = product %}
+{% assign selected = p.selected_or_first_available_variant %}
+<section class="zv-product" data-zv-product data-section-id="{{ section.id }}" data-money-format="{{ shop.money_format | escape }}" data-cart-url="{{ routes.cart_url }}" data-cart-add-url="{{ routes.cart_add_url }}" data-currency="{{ cart.currency.iso_code }}">
+  <div class="zv-main">
+    <div class="zv-gallery" data-zv-gallery>
+      <div class="zv-thumbs-wrap">
+        <button class="zv-thumb-arrow" type="button" data-zv-scroll="up" aria-label="Previous thumbnails">⌃</button>
+        <div class="zv-thumbs" data-zv-thumbs>
+          {% for media in p.media %}
+            {% if media.preview_image %}
+              <button class="zv-thumb {% if forloop.first %}is-active{% endif %}" type="button" data-zv-thumb="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+                {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: media.alt }}
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <button class="zv-thumb-arrow" type="button" data-zv-scroll="down" aria-label="Next thumbnails">⌄</button>
+      </div>
+      <div class="zv-stage">
+        {% for media in p.media %}
+          {% if media.preview_image %}
+            <div class="zv-slide {% if forloop.first %}is-active{% endif %}" data-zv-slide="{{ forloop.index0 }}" data-media-id="{{ media.id }}">
+              {% if media.media_type == 'image' %}
+                {{ media | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '400,600,800,1000,1200,1500', sizes: '(min-width: 990px) 52vw, 100vw', alt: media.alt, class: 'zv-stage-image' }}
+              {% else %}
+                {{ media.preview_image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '400,800,1200,1500', alt: media.alt, class: 'zv-stage-image' }}
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        {% if p.media.size == 0 %}<div class="zv-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>{% endif %}
+        <button type="button" class="zv-gallery-heart" aria-label="Save to wishlist" data-zv-wishlist aria-pressed="false">♡</button>
+        <button type="button" class="zv-zoom" data-zv-zoom aria-label="Zoom product image">⌕</button>
+        <div class="zv-mobile-gallery-nav"><button type="button" data-zv-gallery-prev aria-label="Previous image">‹</button><span data-zv-gallery-count>1 / {{ p.media.size }}</span><button type="button" data-zv-gallery-next aria-label="Next image">›</button></div>
+      </div>
+    </div>
+    <div class="zv-info">
+      <div class="zv-eyebrow">{{ section.settings.eyebrow | escape }} <span></span></div>
+      <h1 class="zv-title">{{ p.title | escape }}</h1>
+      {% if section.settings.subtitle != blank %}<p class="zv-subtitle">{{ section.settings.subtitle | escape }}</p>{% endif %}
+      <div class="zv-price-row"><span class="zv-price" data-zv-price>{{ selected.price | money }}</span><s class="zv-compare" data-zv-compare {% unless selected.compare_at_price > selected.price %}hidden{% endunless %}>{% if selected.compare_at_price > selected.price %}{{ selected.compare_at_price | money }}{% endif %}</s><span class="zv-tax">{{ section.settings.tax_label | escape }}</span></div>
+      {% if section.settings.show_reviews %}<div class="zv-reviews"><span class="zv-stars">★★★★★</span><span>{{ section.settings.review_rating | escape }} <small>({{ section.settings.review_count | escape }} reviews)</small></span></div>{% endif %}
+      <div class="zv-rule"></div>
+      {% assign zv_form_id = 'zv-product-form-' | append: section.id %}
+      {% form 'product', p, id: zv_form_id, class: 'zv-form', data-zv-form: '' %}
+        <input type="hidden" name="id" value="{{ selected.id }}" data-zv-variant-id>
+        {% unless p.has_only_default_variant %}
+          {% for option in p.options_with_values %}
+            <fieldset class="zv-option" data-zv-option data-option-position="{{ option.position }}">
+              <legend>{{ option.name | escape }} <span data-zv-option-value>{{ option.selected_value | escape }}</span></legend>
+              {% assign opt_name = option.name | downcase %}
+              {% if opt_name contains 'color' or opt_name contains 'colour' %}
+                <div class="zv-swatches">
+                  {% for value in option.values %}
+                    {% assign swatch = value.swatch.color %}
+                    <label class="zv-swatch-label" title="{{ value.name | escape }}">
+                      <input type="radio" name="zv-option-{{ section.id }}-{{ option.position }}" value="{{ value.name | escape }}" {% if value.selected %}checked{% endif %} data-zv-choice>
+                      <span class="zv-swatch" style="--swatch:{% if swatch %}{{ swatch }}{% else %}{{ value.name | handleize | replace: '-', '' }}{% endif %}"><span class="zv-swatch-fallback">{{ value.name | slice: 0, 1 }}</span></span>
+                    </label>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="zv-option-values">
+                  {% for value in option.values %}
+                    <label class="zv-value-label"><input type="radio" name="zv-option-{{ section.id }}-{{ option.position }}" value="{{ value.name | escape }}" {% if value.selected %}checked{% endif %} data-zv-choice><span>{{ value.name | escape }}</span></label>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </fieldset>
+          {% endfor %}
+        {% endunless %}
+        <div class="zv-qty-heading">{{ section.settings.quantity_label | escape }}</div>
+        <div class="zv-qty"><button type="button" data-zv-minus aria-label="Decrease quantity">−</button><input type="number" name="quantity" min="{{ selected.quantity_rule.min }}" step="{{ selected.quantity_rule.increment }}" {% if selected.quantity_rule.max != null %}max="{{ selected.quantity_rule.max }}"{% endif %} value="{{ selected.quantity_rule.min }}" data-zv-quantity aria-label="Quantity"><button type="button" data-zv-plus aria-label="Increase quantity">+</button></div>
+        
+<div class="zv-luxury-button-wrapper">
+  <div class="zv-luxury-actions">
+
+    <!-- ADD TO BAG -->
+    <button
+      class="zv-btn zv-add tss-luxury-btn tss-add-bag"
+      type="submit"
+      data-zv-add
+      {% unless selected.available %}disabled{% endunless %}
+    >
+      <svg viewBox="0 0 64 64" fill="none"
+        stroke="currentColor" stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 24h34l4 31H11l4-31Z"/>
+        <path d="M23 26v-8a9 9 0 0 1 18 0v8"/>
+      </svg>
+
+      <span data-zv-add-label>
+        {% if selected.available %}
+          ADD TO BAG
+        {% else %}
+          SOLD OUT
+        {% endif %}
+      </span>
+    </button>
+
+    <!-- WISHLIST AND SHARE -->
+    <div class="tss-luxury-middle">
+
+      <button
+        type="button"
+        class="tss-luxury-icon tss-wishlist"
+        data-tss-wishlist
+        aria-label="Add to wishlist"
+        aria-pressed="false"
+      >
+        <svg viewBox="0 0 64 64"
+          fill="currentColor" aria-hidden="true">
+          <path d="M32 55 8 31C-3 18 11 2 25 12l7 7 7-7C53 2 67 18 56 31Z"/>
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        class="tss-luxury-icon tss-share"
+        data-tss-share
+        aria-label="Share product"
+      >
+        <svg viewBox="0 0 64 64" fill="none"
+          stroke="currentColor" stroke-width="4"
+          stroke-linecap="round" aria-hidden="true">
+          <circle cx="13" cy="32" r="7"/>
+          <circle cx="50" cy="12" r="7"/>
+          <circle cx="50" cy="52" r="7"/>
+          <path d="m19 29 24-14M19 35l24 14"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- BUY IT NOW -->
+    <button
+      class="zv-btn zv-buy tss-luxury-btn tss-buy-now"
+      type="button"
+      data-zv-buy
+      {% unless selected.available %}disabled{% endunless %}
+    >
+      <svg viewBox="0 0 64 64"
+        fill="currentColor" aria-hidden="true">
+        <path d="m5 18 11 10 16-20 16 20 11-10-6 32H11L5 18Zm8 37h38v5H13v-5Z"/>
+        <circle cx="5" cy="15" r="5"/>
+        <circle cx="32" cy="6" r="5"/>
+        <circle cx="59" cy="15" r="5"/>
+      </svg>
+
+      <span>BUY IT NOW</span>
+    </button>
+
+  </div>
+
+  <p class="zv-status"
+    role="status"
+    aria-live="polite"
+    data-zv-status></p>
+</div>
+
+      {% endform %}
+      <script type="application/json" data-zv-variants>{{ p.variants | json }}</script>
+      <div class="zv-benefits">
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' %}<div class="zv-benefit" {{ block.shopify_attributes }}><span class="zv-benefit-icon">{{ block.settings.icon | escape }}</span><span>{{ block.settings.text | newline_to_br }}</span></div>{% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="zv-lightbox" data-zv-lightbox hidden><button type="button" data-zv-close-zoom aria-label="Close zoom">×</button><img src="" alt="Zoomed product" data-zv-zoom-image></div>
+</section>
+{% schema %}
+{
+  "name": "TSS ZEVVAR luxury product",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"ZEVVAR EXCLUSIVE"},
+    {"type":"text","id":"subtitle","label":"Italic product subtitle","default":"A timeless expression of royal craftsmanship, blending heritage with modern elegance."},
+    {"type":"text","id":"tax_label","label":"Price note","default":"(incl. of all taxes)"},
+    {"type":"checkbox","id":"show_reviews","label":"Show manual review display","default":true},
+    {"type":"text","id":"review_rating","label":"Display rating (manual)","default":"4.8"},
+    {"type":"text","id":"review_count","label":"Display review count (manual)","default":"124"},
+    {"type":"text","id":"quantity_label","label":"Quantity label","default":"QUANTITY"},
+    {"type":"text","id":"cart_label","label":"Add to cart label","default":"ADD TO CART"},
+    {"type":"text","id":"buy_label","label":"Buy now label","default":"BUY IT NOW"}
+  ],
+  "blocks": [{"type":"benefit","name":"Service benefit","limit":4,"settings":[{"type":"text","id":"icon","label":"Icon character","default":"◇"},{"type":"textarea","id":"text","label":"Benefit text","default":"Authentic\nCraftsmanship"}]}],
+  "presets":[{"name":"TSS ZEVVAR luxury product","blocks":[{"type":"benefit","settings":{"icon":"♧","text":"Free Shipping\nAbove ₹10,000"}},{"type":"benefit","settings":{"icon":"♔","text":"Luxury\nPackaging"}},{"type":"benefit","settings":{"icon":"◇","text":"Authentic\nCraftsmanship"}},{"type":"benefit","settings":{"icon":"♡","text":"Easy\nReturns"}}]}]
+}
+{% endschema %}

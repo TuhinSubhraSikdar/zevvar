@@ -1,0 +1,7 @@
+<section class="zv-heritage" {% if section.settings.background != blank %}style="--zv-heritage-image:url('{{ section.settings.background | image_url: width: 2000 }}')"{% endif %}>
+  <div class="zv-heritage-quote"><p>“{{ section.settings.quote | escape }}”</p><span>— {{ section.settings.attribution | escape }} —</span></div>
+  <a href="{{ section.settings.link | default: routes.all_products_collection_url }}" class="zv-heritage-link"><span>{{ section.settings.link_text | escape }}</span><span class="zv-circle-arrow">›</span></a>
+</section>
+{% schema %}
+{"name":"TSS ZEVVAR heri","settings":[{"type":"image_picker","id":"background","label":"Banner background"},{"type":"textarea","id":"quote","label":"Heritage quote","default":"Heritage is not a thing of the past, it is a feeling that lives on."},{"type":"text","id":"attribution","label":"Attribution","default":"ZEVVAR"},{"type":"text","id":"link_text","label":"Link text","default":"EXPLORE MORE FROM OUR HERITAGE COLLECTION"},{"type":"url","id":"link","label":"Collection link"}],"presets":[{"name":"TSS ZEVVAR heri"}]}
+{% endschema %}
