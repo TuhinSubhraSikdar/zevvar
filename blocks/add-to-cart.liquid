@@ -1,28 +1,192 @@
 
-
 {%- doc -%}
-  This block is used to display the add to cart button.
-  Intended for product-form.liquid block.
-
-  @param {string} can_add_to_cart - Whether the product can be added to the cart
-  @param {string} add_to_cart_text - The text of the add to cart button
+  ZEVVAR Custom Luxury Add to Bag Button
+  Responsive design with native Shopify functionality.
 {%- enddoc -%}
 
 {% liquid
-  assign class = 'add-to-cart-button ' | append: block.settings.style_class
+  assign class = 'add-to-cart-button tss-luxury-btn tss-add-bag'
   assign id = 'BuyButtons-ProductSubmitButton-' | append: block.id
 %}
 
+<style>
+  .tss-luxury-actions {
+    display: block;
+    position: relative;
+    clear: both;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    margin: 12px 0 0;
+    padding: 0;
+    flex: 0 0 100%;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  .tss-luxury-actions .tss-add-bag {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 44px;
+    min-height: 44px;
+    max-height: 44px;
+    margin: 0;
+    padding: 8px 12px;
+
+    color: #520816;
+    background: linear-gradient(
+      155deg,
+      #fff1ef 0%,
+      #ffbdc7 19%,
+      #f8b6c2 69%,
+      #ffdce0 100%
+    );
+
+    border: 2px solid #f5a0ad;
+    border-radius: 17px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: .04em;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    box-shadow:
+      inset 0 2px 3px #ffffff,
+      inset 0 -4px 6px #d66c855e,
+      0 4px 8px #71401d30;
+
+    cursor: pointer;
+
+    transition:
+      transform .25s ease,
+      box-shadow .25s ease,
+      filter .25s ease;
+  }
+
+  .tss-luxury-actions .tss-add-bag::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    inset: 4px 7px auto;
+    height: 25%;
+    border-top: 1px solid #ffffffc9;
+    border-radius: 100%;
+    filter: blur(1px);
+  }
+
+  .tss-luxury-actions .tss-add-bag::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    top: -80%;
+    left: -85%;
+    width: 40%;
+    height: 260%;
+    transform: rotate(25deg);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #ffffff75,
+      transparent
+    );
+    transition: transform .65s ease;
+  }
+
+  .tss-luxury-actions .tss-add-bag:hover::after {
+    transform: rotate(25deg) translateX(750%);
+  }
+
+  .tss-luxury-actions .tss-add-bag:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.04);
+    box-shadow:
+      inset 0 2px 3px #ffffff88,
+      0 7px 12px #71401d40;
+  }
+
+  .tss-luxury-actions .tss-add-bag:active:not(:disabled) {
+    transform: translateY(1px) scale(.99);
+  }
+
+  .tss-luxury-actions .tss-add-bag:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
+  .tss-luxury-actions .tss-add-bag:focus-visible {
+    outline: 2px solid #7d0636;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 990px) {
+    .tss-luxury-actions .tss-add-bag {
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
+      font-size: 13px;
+      border-radius: 15px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tss-luxury-actions {
+      margin-top: 9px;
+    }
+
+    .tss-luxury-actions .tss-add-bag {
+      height: 38px;
+      min-height: 38px;
+      max-height: 38px;
+      padding: 6px 8px;
+      border-radius: 13px;
+      border-width: 1.5px;
+      font-size: 12px;
+      letter-spacing: .025em;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .tss-luxury-actions .tss-add-bag {
+      height: 35px;
+      min-height: 35px;
+      max-height: 35px;
+      padding: 5px;
+      font-size: 11px;
+      border-radius: 11px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tss-luxury-actions .tss-add-bag,
+    .tss-luxury-actions .tss-add-bag::after {
+      transition: none;
+    }
+  }
+</style>
+
 <span
   {{ block.shopify_attributes }}
-  style="--add-to-cart-font-case: {{ settings.button_text_case }};"
+  class="tss-luxury-actions"
+  style="--add-to-cart-font-case: none;"
 >
   {% render 'add-to-cart-button',
     id: id,
     class: class,
     can_add_to_cart: can_add_to_cart,
     product: closest.product,
-    add_to_cart_text: add_to_cart_text,
+    add_to_cart_text: 'ADD TO BAG',
     data_testid: 'standalone-add-to-cart'
   %}
 </span>

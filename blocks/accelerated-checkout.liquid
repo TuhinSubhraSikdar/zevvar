@@ -1,15 +1,16 @@
 
-
 {%- doc -%}
-  This block is used to display the accelerated checkout button.
-  Intended for product-form.liquid block.
-
-  @param {string} can_add_to_cart - Whether the product can be added to the cart
-  @param form_obj - The form object
-
-  @example
-  {% content_for 'block', type: 'accelerated-checkout', id: 'accelerated-checkout', can_add_to_cart: can_add_to_cart, form_obj: form %}
+  ZEVVAR Custom Luxury Buy Now Button
+  Preserves Shopify accelerated checkout functionality.
 {%- enddoc -%}
+
+{% liquid
+  assign product = closest.product
+
+  if request.visual_preview_mode and product == blank
+    assign product = collections.all.products.first
+  endif
+%}
 
 {% capture accelerated_checkout_button %}
   {% if product != blank and form_obj != blank %}
@@ -17,12 +18,238 @@
   {% endif %}
 {% endcapture %}
 
-{% liquid
-  assign product = closest.product
-  if request.visual_preview_mode and product == blank
-    assign product = collections.all.products.first
-  endif
-%}
+<style>
+  /* ZEVVAR LUXURY BUY NOW */
+
+  .accelerated-checkout-block {
+    display: block;
+    position: relative;
+    clear: both;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    margin: 9px 0 0;
+    padding: 0;
+  }
+
+  /* Shopify accelerated checkout button */
+
+  .accelerated-checkout-block
+  .shopify-payment-button {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px;
+
+    margin: 0;
+    padding: 8px 12px !important;
+
+    border: 2px solid #b90052 !important;
+    border-radius: 17px !important;
+
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    letter-spacing: .04em;
+    line-height: 1 !important;
+    text-align: center;
+    text-transform: uppercase;
+
+    box-shadow:
+      inset 0 2px 4px #ffb0cc,
+      inset 0 -5px 7px #70002d,
+      0 4px 8px #71401d35;
+
+    transition:
+      transform .25s ease,
+      box-shadow .25s ease,
+      filter .25s ease;
+  }
+
+  /* Style unbranded Shopify Buy Now button */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button--unbranded {
+    color: #fff5e9 !important;
+
+    background: linear-gradient(
+      155deg,
+      #ff4a93 0%,
+      #dc0051 18%,
+      #a9003b 68%,
+      #e80065 100%
+    ) !important;
+  }
+
+  /* Glossy highlight */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button--unbranded::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    inset: 4px 7px auto;
+    height: 25%;
+    border-top: 1px solid #ffffffa8;
+    border-radius: 100%;
+    filter: blur(1px);
+  }
+
+  /* Shine animation */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button--unbranded::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    top: -80%;
+    left: -85%;
+    width: 40%;
+    height: 260%;
+    transform: rotate(25deg);
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #ffffff75,
+      transparent
+    );
+
+    transition: transform .65s ease;
+  }
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button--unbranded:hover::after {
+    transform: rotate(25deg) translateX(750%);
+  }
+
+  /* Hover */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+
+    box-shadow:
+      inset 0 2px 4px #ffb0cc,
+      0 7px 12px #71401d45;
+  }
+
+  /* Press */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button:active {
+    transform: translateY(1px) scale(.99);
+  }
+
+  /* Disabled */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
+  /* Focus */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__button:focus-visible {
+    outline: 2px solid #7d0636;
+    outline-offset: 3px;
+  }
+
+  /* More payment options */
+
+  .accelerated-checkout-block
+  .shopify-payment-button__more-options {
+    margin-top: 7px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 12px;
+  }
+
+  /* Tablet */
+
+  @media (max-width: 990px) {
+    .accelerated-checkout-block
+    .shopify-payment-button__button {
+      height: 42px !important;
+      min-height: 42px !important;
+      max-height: 42px;
+      font-size: 13px !important;
+      border-radius: 15px !important;
+    }
+  }
+
+  /* Mobile */
+
+  @media (max-width: 600px) {
+    .accelerated-checkout-block {
+      margin-top: 7px;
+    }
+
+    .accelerated-checkout-block
+    .shopify-payment-button__button {
+      height: 38px !important;
+      min-height: 38px !important;
+      max-height: 38px;
+      padding: 6px 8px !important;
+      font-size: 12px !important;
+      border-radius: 13px !important;
+    }
+  }
+
+  /* Small mobile */
+
+  @media (max-width: 360px) {
+    .accelerated-checkout-block
+    .shopify-payment-button__button {
+      height: 35px !important;
+      min-height: 35px !important;
+      max-height: 35px;
+      padding: 5px !important;
+      font-size: 11px !important;
+      border-radius: 11px !important;
+    }
+  }
+
+  /* Reduced motion */
+
+  @media (prefers-reduced-motion: reduce) {
+    .accelerated-checkout-block
+    .shopify-payment-button__button,
+    .accelerated-checkout-block
+    .shopify-payment-button__button::after {
+      transition: none;
+    }
+  }
+
+  /* Shopify visual editor preview */
+
+  .accelerated-checkout-block[data-shopify-visual-preview] {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .shopify-payment-button__more-options[aria-hidden='true'] {
+    display: none;
+  }
+</style>
 
 {% if accelerated_checkout_button != blank %}
   <div
@@ -39,28 +266,6 @@
     {{ accelerated_checkout_button }}
   </div>
 {% endif %}
-
-{% stylesheet %}
-  .accelerated-checkout-block[data-shopify-visual-preview] {
-    width: 300px;
-  }
-
-  more-payment-options-link {
-    font-size: smaller;
-  }
-
-  more-payment-options-link a {
-    --button-color: var(--color-primary);
-  }
-
-  more-payment-options-link a:hover {
-    --button-color: var(--color-primary-hover);
-  }
-
-  .shopify-payment-button__more-options[aria-hidden='true'] {
-    display: none;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {

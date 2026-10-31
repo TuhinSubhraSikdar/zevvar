@@ -1,0 +1,439 @@
+
+<div id="zevvar-page-loader" class="zv-loader" aria-label="Loading Zevvar">
+  <!-- Brand logo: top-left -->
+  <a class="zv-loader-brand" href="/" aria-label="Zevvar home">
+    <img
+      src="https://cdn.shopify.com/s/files/1/0638/3632/3911/files/Zevvar_logo.png?v=1793467773"
+      alt="Zevvar"
+      width="180"
+      height="100"
+      fetchpriority="high"
+    >
+  </a>
+
+  <!-- Main loading content -->
+  <div class="zv-loader-content">
+
+    <div class="zv-mascot-wrap">
+      <img
+        id="zv-loader-mascot"
+        class="zv-loader-mascot"
+        src="https://cdn.shopify.com/s/files/1/0638/3632/3911/files/idel-2.png?v=1792496194"
+        alt="Zevvar mascot"
+        width="320"
+        height="320"
+      >
+    </div>
+
+    <div class="zv-loader-quote-wrap">
+      <p id="zv-loader-quote" class="zv-loader-quote">
+        Good things take time. Great style is worth the wait.
+      </p>
+    </div>
+
+    <div class="zv-loader-status">
+      <div class="zv-loader-dots" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p>PREPARING SOMETHING SPECIAL</p>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .zv-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F7F2E8;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transition: opacity .4s ease, visibility .4s ease;
+  }
+
+  .zv-loader.zv-loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* Logo at top-left */
+  .zv-loader-brand {
+    position: absolute;
+    top: 28px;
+    left: 35px;
+    z-index: 2;
+    display: block;
+    line-height: 0;
+  }
+
+  .zv-loader-brand img {
+    display: block;
+    width: 145px;
+    height: auto;
+    max-height: 85px;
+    object-fit: contain;
+  }
+
+  /* Center content */
+  .zv-loader-content {
+    width: min(90%, 520px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 20px 35px;
+    gap: 22px;
+  }
+
+  /* Mascot image */
+  .zv-mascot-wrap {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zv-loader-mascot {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity .35s ease, transform .35s ease;
+  }
+
+  .zv-loader-mascot.zv-mascot-changing {
+    opacity: 0;
+    transform: translateY(10px) scale(.96);
+  }
+
+  /* Random quotes */
+  .zv-loader-quote-wrap {
+    min-height: 65px;
+    max-width: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zv-loader-quote {
+    margin: 0;
+    color: #572D35;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    line-height: 1.5;
+    font-style: italic;
+    font-weight: 500;
+    transition: opacity .3s ease;
+  }
+
+  .zv-loader-quote.zv-quote-changing {
+    opacity: 0;
+  }
+
+  /* Loading dots */
+  .zv-loader-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    margin-top: 5px;
+  }
+
+  .zv-loader-dots {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+  }
+
+  .zv-loader-dots span {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #9B334D;
+    animation: zvDotPulse 1s ease-in-out infinite;
+  }
+
+  .zv-loader-dots span:nth-child(2) {
+    animation-delay: .15s;
+  }
+
+  .zv-loader-dots span:nth-child(3) {
+    animation-delay: .3s;
+  }
+
+  .zv-loader-status p {
+    margin: 0;
+    color: #8A5960;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    font-weight: 600;
+  }
+
+  @keyframes zvDotPulse {
+    0%, 80%, 100% {
+      transform: translateY(0);
+      opacity: .4;
+    }
+    40% {
+      transform: translateY(-7px);
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .zv-loader-brand {
+      top: 18px;
+      left: 18px;
+    }
+
+    .zv-loader-brand img {
+      width: 115px;
+      max-height: 70px;
+    }
+
+    .zv-loader-content {
+      width: 94%;
+      padding: 85px 15px 25px;
+      gap: 18px;
+    }
+
+    .zv-mascot-wrap {
+      width: min(75vw, 270px);
+      height: min(75vw, 270px);
+    }
+
+    .zv-loader-quote {
+      font-size: 18px;
+    }
+
+    .zv-loader-quote-wrap {
+      min-height: 60px;
+    }
+
+    .zv-loader-status p {
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zv-loader,
+    .zv-loader-mascot,
+    .zv-loader-quote,
+    .zv-loader-dots span {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  const loader = document.getElementById('zevvar-page-loader');
+
+  if (!loader || window.zvLoaderInitialized) return;
+  window.zvLoaderInitialized = true;
+
+  const mascot = document.getElementById('zv-loader-mascot');
+  const quote = document.getElementById('zv-loader-quote');
+
+  const mascotImages = [
+    'https://cdn.shopify.com/s/files/1/0638/3632/3911/files/idel-2.png?v=1792496194',
+    'https://cdn.shopify.com/s/files/1/0638/3632/3911/files/idel-4.png?v=1792496194',
+    'https://cdn.shopify.com/s/files/1/0638/3632/3911/files/idel-3.png?v=1792496194',
+    'https://cdn.shopify.com/s/files/1/0638/3632/3911/files/buy-4.png?v=1792499198',
+    'https://cdn.shopify.com/s/files/1/0638/3632/3911/files/bored-2.png?v=1792501861',
+    'https://cdn.shopify.com/s/files/1/0638/3632/3911/files/curios-3.png?v=1792502331',
+    'https://cdn.shopify.com/s/files/1/0638/3632/3911/files/curios-2.png?v=1792502332'
+  ];
+
+  const quotes = [
+    'Good things take time. Great style is worth the wait.',
+    'A little curiosity makes every day more interesting.',
+    'Life is too short for ordinary things.',
+    'Your next favourite find might be just around the corner.',
+    'Stay curious. Stay stylish. Stay uniquely you.',
+    'The best things are always worth discovering.',
+    'A little patience, a little magic, and a lot of style.',
+    'Make room for something wonderful.',
+    'Style is a way to say who you are without speaking.',
+    'Something lovely is getting ready for you.',
+    'Keep exploring. Your story is still unfolding.',
+    'Every great discovery starts with a little curiosity.'
+  ];
+
+  let imageOrder = [];
+  let imageIndex = 0;
+  let mascotTimer;
+  let quoteTimer;
+  let navigationStarted = false;
+
+  // Preload mascot images for smoother transitions.
+  mascotImages.forEach(function (src) {
+    const img = new Image();
+    img.src = src;
+  });
+
+  // Shuffle images without immediately repeating the same image.
+  function shuffleImages() {
+    imageOrder = [...mascotImages];
+
+    for (let i = imageOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [imageOrder[i], imageOrder[j]] = [imageOrder[j], imageOrder[i]];
+    }
+
+    imageIndex = 0;
+  }
+
+  function changeMascot() {
+    if (!mascot || loader.classList.contains('zv-loader-hidden')) return;
+
+    if (imageOrder.length === 0 || imageIndex >= imageOrder.length) {
+      const previousImage = mascot.src;
+      shuffleImages();
+
+      if (imageOrder[0] === previousImage) {
+        imageOrder.push(imageOrder.shift());
+      }
+    }
+
+    const nextImage = imageOrder[imageIndex++];
+
+    mascot.classList.add('zv-mascot-changing');
+
+    window.setTimeout(function () {
+      mascot.src = nextImage;
+
+      mascot.onload = function () {
+        mascot.classList.remove('zv-mascot-changing');
+      };
+
+      if (mascot.complete) {
+        mascot.classList.remove('zv-mascot-changing');
+      }
+    }, 300);
+  }
+
+  function changeQuote() {
+    if (!quote || loader.classList.contains('zv-loader-hidden')) return;
+
+    const currentQuote = quote.textContent;
+    const availableQuotes = quotes.filter(function (item) {
+      return item !== currentQuote;
+    });
+
+    const nextQuote = availableQuotes[
+      Math.floor(Math.random() * availableQuotes.length)
+    ];
+
+    quote.classList.add('zv-quote-changing');
+
+    window.setTimeout(function () {
+      quote.textContent = nextQuote;
+      quote.classList.remove('zv-quote-changing');
+    }, 300);
+  }
+
+  function startAnimations() {
+    if (mascotTimer || quoteTimer) return;
+
+    shuffleImages();
+
+    mascotTimer = window.setInterval(changeMascot, 1800);
+    quoteTimer = window.setInterval(changeQuote, 3000);
+  }
+
+  function stopAnimations() {
+    window.clearInterval(mascotTimer);
+    window.clearInterval(quoteTimer);
+    mascotTimer = null;
+    quoteTimer = null;
+  }
+
+  function hideLoader() {
+    loader.classList.add('zv-loader-hidden');
+    navigationStarted = false;
+    stopAnimations();
+  }
+
+  function showLoader() {
+    loader.classList.remove('zv-loader-hidden');
+    startAnimations();
+  }
+
+  // Start mascot and quote animations immediately.
+  startAnimations();
+
+  // Hide after the initial page has loaded.
+  if (document.readyState === 'complete') {
+    hideLoader();
+  } else {
+    window.addEventListener('load', hideLoader, { once: true });
+  }
+
+  // Safety fallback.
+  window.setTimeout(hideLoader, 8000);
+
+  // Handle browser back and forward navigation.
+  window.addEventListener('pageshow', hideLoader);
+
+  // Show loader for internal page navigation.
+  document.addEventListener('click', function (event) {
+    const link = event.target.closest('a[href]');
+
+    if (!link) return;
+
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      link.target ||
+      link.hasAttribute('download') ||
+      link.getAttribute('href').startsWith('#')
+    ) return;
+
+    const url = new URL(link.href, window.location.href);
+
+    if (
+      url.origin !== window.location.origin ||
+      (
+        url.pathname === window.location.pathname &&
+        url.search === window.location.search
+      )
+    ) return;
+
+    // Exclude cart, checkout and account actions.
+    if (/\/(cart\/add|checkout|account)(\/|$)/.test(url.pathname)) return;
+
+    if (navigationStarted) return;
+
+    navigationStarted = true;
+    showLoader();
+
+    window.setTimeout(function () {
+      if (event.defaultPrevented) {
+        hideLoader();
+        return;
+      }
+
+      window.location.assign(url.href);
+    }, 180);
+  });
+})();
+</script>
