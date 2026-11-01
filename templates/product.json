@@ -897,7 +897,7 @@
       "name": "TSS ZEVVAR luxury product",
       "settings": {
         "eyebrow": "ZEVVAR EXCLUSIVE",
-        "subtitle": "A timeless expression of royal craftsmanship, blending heritage with modern elegance.",
+        "subtitle": "{{ product.metafields.custom.italic_product_subtitle.value }}",
         "tax_label": "(incl. of all taxes)",
         "show_reviews": true,
         "review_rating": "4.8",
@@ -921,7 +921,7 @@
           "type": "tab",
           "settings": {
             "heading": "DETAILS",
-            "content": "{{ product.description }}"
+            "content": "{{ product.metafields.custom.product_key_details | metafield_tag }}"
           }
         },
         "tab_W78wqt": {
@@ -935,7 +935,7 @@
           "type": "tab",
           "settings": {
             "heading": "CARE",
-            "content": ""
+            "content": "{{ product.metafields.custom.product_care_details | metafield_tag }}"
           }
         },
         "feature_6KhGVU": {
@@ -985,15 +985,15 @@
       "settings": {
         "heading": "A Masterpiece of Tradition and Grace",
         "handwritten": "For the woman who\nwears her heritage.",
-        "model_image": "shopify://shop_images/04-necklace-on-model.jpg",
-        "packaging_image": "shopify://shop_images/05-luxury-gift-box.jpg"
+        "model_image": "{{ product.metafields.custom.model_photograph.value }}",
+        "packaging_image": "{{ product.metafields.custom.model_photograph.value }}"
       }
     },
     "tss_zevvar_heritage_kFEgXe": {
       "type": "tss-zevvar-heritage",
       "name": "TSS ZEVVAR heri",
       "settings": {
-        "background": "shopify://shop_images/banner-1.png",
+        "background": "{{ product.metafields.custom.tss_zevvar_heri_image.value }}",
         "quote": "Heritage is not a thing of the past, it is a feeling that lives on.",
         "attribution": "ZEVVAR",
         "link_text": "EXPLORE MORE FROM OUR HERITAGE COLLECTION",
@@ -1023,7 +1023,7 @@
             "sub_heading_padding_vertical": 8,
             "sub_heading_padding_vertical_mobile": 6,
             "sub_heading_color": "#121212",
-            "sub_heading_bg_color": "#F7F7F7",
+            "sub_heading_bg_color": "#f7f7f7",
             "sub_heading_border_color": "#121212"
           }
         },
@@ -1041,7 +1041,7 @@
             "heading_mt": 16,
             "heading_mt_mobile": 16,
             "heading_color": "#121212",
-            "heading_accent_color": "#AFAFAF"
+            "heading_accent_color": "#afafaf"
           }
         },
         "text_7cxFEA": {
@@ -1084,8 +1084,8 @@
             "button_mt_mobile": 16,
             "use_shadow": false,
             "button_color": "#121212",
-            "button_hover_color": "#FFFFFF",
-            "button_bg_color": "#FFFFFF",
+            "button_hover_color": "#ffffff",
+            "button_bg_color": "#ffffff",
             "button_bg_hover_color": "#121212",
             "button_border_color": "#121212",
             "button_border_hover_color": "#121212"
@@ -1161,7 +1161,7 @@
         "card_radius": 16,
         "card_border_thickness": 0,
         "card_shadow": true,
-        "card_shadow_color": "#C9A15A",
+        "card_shadow_color": "#c9a15a",
         "card_content_align": "left",
         "card_content_align_mobile": "left",
         "author_image_size": 42,
@@ -1199,17 +1199,17 @@
         "text_color": "#121212",
         "text_bg_color": "#121212",
         "author_color": "#121212",
-        "subcopy_author_color": "#AFAFAF",
-        "card_bg_color": "#F7F2E8",
+        "subcopy_author_color": "#afafaf",
+        "card_bg_color": "#f7f2e8",
         "card_border_color": "#121212",
-        "slide_stars_color": "#FFFFFF",
-        "slide_stars_bg_color": "#C9A15A",
-        "slide_stars_bg_half_color": "#DDDDDD",
-        "author_image_color": "#FFFFFF",
+        "slide_stars_color": "#ffffff",
+        "slide_stars_bg_color": "#c9a15a",
+        "slide_stars_bg_half_color": "#dddddd",
+        "author_image_color": "#ffffff",
         "author_image_bg_color": "#121212",
         "author_image_border_color": "#121212",
         "background_style": "solid",
-        "background_color": "#F7F2E8",
+        "background_color": "#f7f2e8",
         "background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
         "border_color": "#121212",
         "margin_top": 0,
