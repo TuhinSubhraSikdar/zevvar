@@ -6,9 +6,9 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
-    
-{{ 'zevvar-cursor.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'zevvar-cursor.js' | asset_url }}" defer="defer"></script>
+{% comment %} The bubble cursor {% endcomment %}
+{% comment %} {{ 'zevvar-cursor.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'zevvar-cursor.js' | asset_url }}" defer="defer"></script> {% endcomment %}
 
     {%- if settings.favicon != blank -%}
       <link
@@ -40,6 +40,7 @@
     {% endif %}
 
     {{ content_for_header }}
+    <meta name="google-site-verification" content="3O8G0VcAEZm_EQNSCEhtVnpc2QZWxBYfhPblbyuh2ws" />
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">

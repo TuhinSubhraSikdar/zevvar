@@ -986,7 +986,7 @@
         "heading": "A Masterpiece of Tradition and Grace",
         "handwritten": "For the woman who\nwears her heritage.",
         "model_image": "{{ product.metafields.custom.model_photograph.value }}",
-        "packaging_image": "{{ product.metafields.custom.model_photograph.value }}"
+        "packaging_image": "{{ product.metafields.custom.packaging_photograph.value }}"
       }
     },
     "tss_zevvar_heritage_kFEgXe": {
