@@ -44,7 +44,7 @@
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
-    {% render 'tss-zevvar-loading-screen' %}
+    {% comment %} {% render 'tss-zevvar-loading-screen' %} {% endcomment %}
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
@@ -61,6 +61,6 @@
     {% endif %}
 
 
-    {% render 'girl-mascot' %}
+    {% comment %} {% render 'girl-mascot' %} {% endcomment %}
   </body>
 </html>
